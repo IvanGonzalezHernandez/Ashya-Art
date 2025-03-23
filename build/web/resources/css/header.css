@@ -1,0 +1,68 @@
+/* Estilo para el navbar */
+.navbar {
+    background-color: #ffffff; /* Color de fondo del navbar (blanco) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil debajo del navbar */
+}
+
+/* Estilo para el logo dentro del navbar */
+.navbar .navbar-brand img {
+    transition: transform 0.3s ease; /* Transición suave en la propiedad de transformación */
+}
+
+/* Efecto hover sobre el logo del navbar */
+.navbar .navbar-brand img:hover {
+    transform: scale(1.1); /* Aumenta el tamaño del logo en un 10% cuando se pasa el ratón por encima */
+}
+
+/* Estilo para los enlaces de navegación dentro del navbar */
+.navbar .navbar-nav .nav-link {
+    color: #333; /* Color de los enlaces (gris oscuro) */
+    font-weight: bold; /* Pone los enlaces en negrita */
+    text-transform: uppercase; /* Transforma el texto a mayúsculas */
+    font-size: 1.1rem; /* Tamaño de la fuente (ligeramente más grande que el tamaño normal) */
+    transition: color 0.3s ease; /* Transición suave en el color del enlace */
+}
+
+/* Efecto hover sobre los enlaces de navegación */
+.navbar .navbar-nav .nav-link:hover {
+    color: #3A9097; /* Cambia el color del enlace cuando se pasa el ratón por encima */
+}
+
+/* Estilo para el botón de menú (toggler) en dispositivos móviles */
+.navbar .navbar-toggler {
+    border: none; /* Elimina el borde del botón */
+}
+
+/* Estilo para los elementos de lista dentro del navbar */
+.navbar .nav-item {
+    margin-left: 15px; /* Margen a la izquierda de cada item */
+    margin-right: 15px; /* Margen a la derecha de cada item */
+}
+
+/* Estilo para los iconos dentro de los enlaces del navbar */
+.navbar .d-flex .nav-link i {
+    color: #333; /* Color del icono (gris oscuro) */
+}
+
+/* Efecto hover sobre los iconos dentro de los enlaces */
+.navbar .d-flex .nav-link:hover i {
+    color: #3A9097; /* Cambia el color del icono cuando se pasa el ratón por encima */
+}
+
+/* Estilo para el contador del carrito */
+#cart-count {
+    position: absolute; /* Posicionamiento absoluto para que se superponga al icono */
+    top: -5px; /* Lo sube un poco respecto al icono */
+    right: -10px; /* Lo desplaza hacia la derecha */
+    background-color: #3A9097; /* Color de fondo */
+    color: #ffffff; /* Texto blanco */
+    font-size: 0.7rem; /* Tamaño de fuente pequeño */
+    font-weight: bold; /* Texto en negrita */
+    padding: 0.2rem 0.4rem; /* Espaciado interno para hacerlo más visible */
+    border-radius: 50%; /* Hace el contador completamente redondo */
+    min-width: 18px; /* Ancho mínimo para que se vea bien con números de una cifra */
+    text-align: center; /* Centra el número dentro del círculo */
+    display: flex; /* Usa flexbox para centrar el número */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+}
