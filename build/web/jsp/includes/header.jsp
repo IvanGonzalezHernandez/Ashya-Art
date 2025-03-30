@@ -3,17 +3,18 @@
         
         <!-- Logo a la izquierda -->
         <a class="navbar-brand me-3" href="#"> <!-- Enlace que contiene el logo -->
-            <img src="resources/imagenes/logo/logo.png" alt="Logo" width="50"> <!-- Imagen del logo -->
+            <img src="${pageContext.request.contextPath}/resources/imagenes/logo/logo.png" alt="Logo" width="50"> <!-- Imagen del logo -->
         </a>
 
         <!-- Menú de navegación centrado y expandible -->
         <div class="collapse navbar-collapse flex-grow-1 text-center" id="navbarNav"> <!-- Contenedor del menú de navegación -->
             <ul class="navbar-nav mx-auto"> <!-- Lista de enlaces de navegación con centrado horizontal -->
-                <li class="nav-item me-5"><a class="nav-link" href="NavigationServlet?page=home">HOME</a></li> <!-- Enlace a la página de inicio -->
-                <li class="nav-item me-5"><a class="nav-link" href="NavigationServlet?page=workshops">WORKSHOPS & SERVICES</a></li> <!-- Enlace a talleres y servicios -->
-                <li class="nav-item me-5"><a class="nav-link" href="NavigationServlet?page=shop">SHOP</a></li> <!-- Enlace a la tienda -->
-                <li class="nav-item me-5"><a class="nav-link" href="NavigationServlet?page=about">ABOUT ASHYA</a></li> <!-- Enlace a la sección "Sobre Ashya" -->
-                <li class="nav-item me-5"><a class="nav-link" href="NavigationServlet?page=studio">ASHYA'S STUDIO & MEMBERSHIP</a></li> <!-- Enlace al estudio y membresía -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=home">HOME</a></li> <!-- Enlace a la página de inicio -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=workshops">WORKSHOPS & SERVICES</a></li> <!-- Enlace a talleres y servicios -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=calendar">CALENDAR</a></li> <!-- Enlace al calendario general -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=shop">SHOP</a></li> <!-- Enlace a la tienda -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=about">ABOUT ASHYA</a></li> <!-- Enlace a la sección "Sobre Ashya" -->
+                <li class="nav-item me-5"><a class="nav-link" href="${pageContext.request.contextPath}/NavigationServlet?page=studio">ASHYA'S STUDIO</a></li> <!-- Enlace al estudio y membresía -->
             </ul>
         </div>
 

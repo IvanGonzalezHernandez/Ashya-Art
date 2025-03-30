@@ -1,0 +1,48 @@
+body {
+    background-color: #F9F3EC !important;
+}
+
+/* Estilo general de las pestañas */
+.nav-tabs {
+    border-bottom: 2px solid #c0a080; /* Color sutil para la línea inferior */
+}
+
+.nav-tabs .nav-link {
+    color: black !important;
+    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
+    padding: 12px 20px; /* Más espacio en los tabs */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Cambio de color al pasar el mouse */
+.nav-tabs .nav-link:hover {
+    background-color: #e3d5c5; /* Color más suave al pasar el mouse */
+}
+
+/* Pestaña activa */
+.nav-tabs .nav-link.active {
+    color: black !important;
+    background-color: #F9F3EC !important;
+    border: none !important;
+    border-bottom: 3px solid #c0a080 !important; /* Línea destacada en la pestaña activa */
+}
+
+.card {
+    border: none !important;
+    box-shadow: none;
+    margin-bottom: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: transparent !important; /* Fondo transparente de la tarjeta */
+}
+
+.card-body {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.card-img-top {
+    height: 350px; /* Tamaño fijo para las imágenes */
+    object-fit: cover; /* Recorta la imagen sin deformarla */
+}

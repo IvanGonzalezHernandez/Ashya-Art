@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    min-height: 100vh;
+}
+#aside {
+    min-width: 250px;
+    background: #ffffff;
+    color: #000;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    text-align: center;
+}
+#logo {
+    max-width: 120px;
+    margin-bottom: 20px;
+}
+main {
+    background-color: #F9F3EC;
+    margin-left: 260px;
+    padding: 20px;
+    flex-grow: 1;
+}
+.nav-link {
+    color: #000;
+    transition: background 0.3s ease;
+}
+.nav-link.active, .nav-link:hover {
+    background: #3A9097 !important;
+    color: white !important;
+}
+.tab-pane {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.tab-pane.active {
+    opacity: 1;
+}

@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3ece7;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    background: #eee0d0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.day {
+    background: #e7d3b9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    min-height: 100px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    transition: background 0.3s ease;
+}
+
+.event-day {
+    cursor: pointer;
+}
+
+.event-day:hover {
+    background-color: rgba(58, 144, 151, 0.6);
+}
+
+.header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el modal */
+.modal-body img {
+    max-width: 100%;
+    border-radius: 5px;
+}

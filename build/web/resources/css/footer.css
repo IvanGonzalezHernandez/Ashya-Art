@@ -1,0 +1,8 @@
+footer {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 2px -2px gray;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    position: relative; /* Garantiza que el footer no se superponga */
+}

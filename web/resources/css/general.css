@@ -1,3 +1,10 @@
 * {
     font-family: "Quicksand", sans-serif;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garantiza que el body siempre ocupe al menos el 100% de la altura */
+    margin: 0;
+}

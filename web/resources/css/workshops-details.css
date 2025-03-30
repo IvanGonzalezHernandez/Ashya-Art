@@ -1,0 +1,17 @@
+body {
+    background-color: #F9F3EC !important;
+}
+/* Ajuste de imágenes para un tamaño uniforme */
+.img-container {
+    width: 100%;
+    height: 400px; /* Altura fija para todas las imágenes */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajuste sin deformar la imagen */
+}

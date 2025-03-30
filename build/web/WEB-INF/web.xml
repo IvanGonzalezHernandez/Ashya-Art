@@ -4,6 +4,14 @@
         <servlet-name>NavigationServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.NavigationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WorkshopsServicesServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.WorkshopsServicesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.LoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
@@ -12,7 +20,14 @@
     <welcome-file-list>
         <welcome-file>/jsp/vistas/home.jsp</welcome-file>
     </welcome-file-list>
-
+    <servlet-mapping>
+        <servlet-name>WorkshopsServicesServlet</servlet-name>
+        <url-pattern>/WorkshopsServicesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

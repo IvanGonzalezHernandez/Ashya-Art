@@ -1,0 +1,6 @@
+projectKey=Ashya-Art
+serverUrl=http://localhost:9000
+serverVersion=25.3.0.104237
+dashboardUrl=http://localhost:9000/dashboard?id=Ashya-Art
+ceTaskId=0c20b93d-2a11-463f-aa8d-97e6ecad387b
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0c20b93d-2a11-463f-aa8d-97e6ecad387b
