@@ -15,6 +15,7 @@
         <%@ include file="../includes/cdn.jsp" %>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/calendar.css"/>
         <script src="${pageContext.request.contextPath}/resources/js/calendar.js" defer></script>
+        <script src="${pageContext.request.contextPath}/resources/js/cart.js" defer></script>
 
     <body>
         <%@ include file="../includes/header.jsp" %>

@@ -1,6 +1,6 @@
-body {
+ body {
     font-family: Arial, sans-serif;
-    background-color: #f3ece7;
+    background-color: #F9F3EC;
     text-align: center;
 }
 
@@ -19,13 +19,13 @@ body {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
-    background: #eee0d0;
+    background: #EFE5DB;
     padding: 20px;
     border-radius: 10px;
 }
 
 .day {
-    background: #e7d3b9;
+    background: #CCBAB0;
     padding: 10px;
     border-radius: 5px;
     text-align: center;
@@ -55,4 +55,11 @@ body {
 .modal-body img {
     max-width: 100%;
     border-radius: 5px;
+}
+
+/* Cambiar el color de fondo del modal */
+.modal-content {
+    background-color: #EFE5DB; /* Color claro */
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }

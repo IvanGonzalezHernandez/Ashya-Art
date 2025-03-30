@@ -60,7 +60,6 @@
                         <li><strong>Duration:</strong> <%= cursoSeleccionado.getDuracion()%></li>
                         <li><strong>Pieces created:</strong> <%= cursoSeleccionado.getPiezas_creadas()%></li>
                         <li><strong>Language:</strong> <%= cursoSeleccionado.getIdioma()%></li>
-                        <li><strong>Location:</strong> <%= cursoSeleccionado.getLocalizacion()%></li>
                         <li><strong>Price:</strong> <%= cursoSeleccionado.getPrecio()%>€/Person</li>
                     </ul>
                 </div>
@@ -72,27 +71,6 @@
 
 
 
-        <div id="calendar"></div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth', // Vista inicial
-                    events: [
-                        {
-                            title: 'Evento',
-                            start: '2025-04-01',
-                            extendedProps: {
-                                imageUrl: '../../resources/imagenes/logo/logo.png'
-                            }
-                        }
-                    ],
-
-
-                });
-                calendar.render();
-            });
-        </script>
 
 
 

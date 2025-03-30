@@ -26,7 +26,7 @@ public class CursoDAO {
 
             while (rs.next()) {
                 Curso curso = new Curso(
-                        rs.getInt("id_curso"),
+                        rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
                         rs.getDouble("precio"),
@@ -36,7 +36,7 @@ public class CursoDAO {
                         rs.getString("duracion"),
                         rs.getString("piezas_creadas"),
                         rs.getString("idioma"),
-                        rs.getString("localizacion")
+                        rs.getString("tipo")
                 );
                 cursos.add(curso);
             }

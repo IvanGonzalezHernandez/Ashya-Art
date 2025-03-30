@@ -11,14 +11,14 @@ package com.ashyaart.ecommerce.modelo;
 public class Admin {
 
     // Atributos de la clase Admin
-    private int id_admin;
+    private int id;
     private String nombre;
     private String email;
     private String password;
 
     // Constructor de la clase Admin
     public Admin(int id, String nombre, String email, String password) {
-        this.id_admin = id;
+        this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
@@ -26,11 +26,11 @@ public class Admin {
 
     // Métodos getter y setter para los atributos
     public int getId() {
-        return id_admin;
+        return id;
     }
 
     public void setId(int id) {
-        this.id_admin = id;
+        this.id = id;
     }
 
     public String getNombre() {

@@ -1,7 +1,7 @@
 const images = {
-    "2025-03-01": { img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 1', desc: 'Descripción del curso 1' },
-    "2025-03-03": { img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 2', desc: 'Descripción del curso 2' },
-    "2025-03-10": { img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 3', desc: 'Descripción del curso 3' }
+    "2025-03-01": {img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 1', desc: 'Descripción del curso 1'},
+    "2025-03-03": {img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 2', desc: 'Descripción del curso 2'},
+    "2025-03-10": {img: '/Ashya-Art/resources/imagenes/workshops-services/courses/kintsugi_class.png', title: 'Curso 3', desc: 'Descripción del curso 3'}
 };
 
 
@@ -44,9 +44,9 @@ function renderCalendar() {
 }
 
 function openModal(event) {
-    document.getElementById("eventTitle").textContent = event.title;
-    document.getElementById("eventImage").src = event.img;
-    document.getElementById("eventDescription").textContent = event.desc;
+    //document.getElementById("eventTitle").textContent = event.title;
+    //document.getElementById("eventImage").src = event.img;
+    //document.getElementById("eventDescription").textContent = event.desc;
     new bootstrap.Modal(document.getElementById("eventModal")).show();
 }
 
@@ -72,4 +72,26 @@ document.getElementById("reservationForm").addEventListener("submit", function (
     alert("Reserva realizada con éxito.");
     document.getElementById("reservationForm").reset();
     new bootstrap.Modal(document.getElementById("eventModal")).hide();
+});
+
+function updateCourseDetails() {
+    const select = document.getElementById("courseSelect");
+    const selectedOption = select.options[select.selectedIndex];
+
+    // Obtener los atributos de la opción seleccionada
+    const imgSrc = selectedOption.getAttribute("data-img");
+    const coursePrice = selectedOption.getAttribute("data-price");
+    const courseTime = selectedOption.getAttribute("data-time");
+    const courseSpots = selectedOption.getAttribute("data-spots");
+
+    // Actualizar los elementos del modal
+    document.getElementById("eventImage").src = imgSrc;
+    document.getElementById("coursePrice").textContent = coursePrice + " eur";
+    document.getElementById("courseTime").textContent = courseTime;
+    document.getElementById("courseSpots").textContent = courseSpots;
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateCourseDetails();
 });
