@@ -73,10 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Función que se ejecuta cuando se agrega un producto al carrito desde el modal
     function agregarAlCarritoDesdeModal() {
         const courseSelect = document.getElementById("courseSelect");  // Obtiene el elemento select del modal
-        if (!courseSelect) return;
+        if (!courseSelect)
+            return;
 
         const selectedOption = courseSelect.options[courseSelect.selectedIndex];  // Obtiene la opción seleccionada
-        if (!selectedOption) return;
+        if (!selectedOption)
+            return;
 
         // Crea un objeto del producto a agregar
         const nuevoCurso = {
@@ -105,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const button = event.target.closest("button.btn-eliminar");  // Busca el botón de eliminar más cercano
         if (button) {
             const index = Number(button.closest("div[data-index]").getAttribute("data-index"));
-            if (isNaN(index)) return;  // Verifica que sea un índice válido
+            if (isNaN(index))
+                return;  // Verifica que sea un índice válido
 
             // Elimina el producto del carrito
             carrito.splice(index, 1);
@@ -156,8 +159,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // Evento para agregar productos al carrito desde el botón del modal
     document.getElementById("addToCartButton").addEventListener("click", agregarAlCarritoDesdeModal);
 
-    // Evento para el botón de checkout
-    botonCheckout.addEventListener("click", () => {
-        alert("Redirigiendo a la página de pago...");  // Muestra un mensaje de redirección
+// Añadir un evento de escucha para el clic en el botón de checkout
+    document.getElementById("checkout-btn").addEventListener("click", async () => {
+        // Obtener el carrito del almacenamiento local (localStorage)
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+        try {
+            // Enviar una solicitud POST al servlet para crear una sesión de Stripe
+            const response = await fetch("http://localhost:8080/Ashya-Art/CheckoutServlet", {
+                method: "POST", // Método HTTP: POST
+                headers: {"Content-Type": "application/json"}, // El tipo de contenido que se enviará es JSON
+                body: JSON.stringify(carrito), // Convertir el carrito a JSON y enviarlo
+            });
+
+            // Convertir la respuesta en JSON
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);  // Mostrar la respuesta del servidor en la consola
+
+            // Si se recibe la URL de Stripe, redirigir a la página de pago de Stripe
+            if (data.url) {
+                window.location.href = data.url;  // Redirigir a Stripe Checkout
+            } else {
+                alert("Error: No se recibió la URL de Stripe");  // Si no se recibió la URL
+            }
+        } catch (error) {
+            // Si ocurre un error, mostrarlo en la consola y alertar al usuario
+            console.error("Error:", error);
+            alert("Error al conectar con el servidor");
+        }
     });
+
+
 });

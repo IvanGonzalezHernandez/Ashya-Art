@@ -12,6 +12,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.CheckoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/CheckoutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
