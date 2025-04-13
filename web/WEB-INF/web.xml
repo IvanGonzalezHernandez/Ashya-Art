@@ -5,16 +5,24 @@
         <servlet-class>com.ashyaart.ecommerce.controlador.NavigationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WorkshopsServicesServlet</servlet-name>
-        <servlet-class>com.ashyaart.ecommerce.controlador.WorkshopsServicesServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckoutServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.CheckoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContextInit</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.ContextInit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SuccessServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.SuccessServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
@@ -25,16 +33,24 @@
         <welcome-file>/jsp/vistas/home.jsp</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
-        <servlet-name>WorkshopsServicesServlet</servlet-name>
-        <url-pattern>/WorkshopsServicesServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckoutServlet</servlet-name>
         <url-pattern>/CheckoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContextInit</servlet-name>
+        <url-pattern>/ContextInit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SuccessServlet</servlet-name>
+        <url-pattern>/SuccessServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

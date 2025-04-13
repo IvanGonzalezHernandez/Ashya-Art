@@ -72,37 +72,9 @@
                 <p><strong>Plazas restantes:</strong> <span id="courseSpots"></span></p>
                 <p><a id="courseLink" href="${pageContext.request.contextPath}/NavigationServlet?page=workshops">Más información</a></p>
 
-                <!-- Formulario de Reserva -->
-                <h5><strong>Formulario de Reserva</strong></h5>
-                <form id="reservationForm">
-                    <!-- Campo para ingresar el nombre -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" required>
-                    </div>
-                    <!-- Campo para ingresar los apellidos -->
-                    <div class="mb-3">
-                        <label for="lastname" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="lastname" required>
-                    </div>
-                    <!-- Campo para ingresar el correo electrónico -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <!-- Campo para ingresar el teléfono -->
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="phone" required>
-                    </div>
-                    <!-- Campo para ingresar la dirección -->
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="address" required>
-                    </div>
-                    <!-- Botón para agregar al carrito -->
-                    <button type="button" id="addToCartButton" class="btn btn-primary w-100">Add to the cart</button>
-                </form>
+                <!-- Botón para agregar al carrito -->
+                <button type="button" id="addToCartButton" class="btn btn-primary w-100">Add to the cart</button>
+                
             </div>
         </div>
     </div>

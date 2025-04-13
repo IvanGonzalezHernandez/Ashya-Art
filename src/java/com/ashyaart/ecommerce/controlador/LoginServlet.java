@@ -5,6 +5,7 @@
 package com.ashyaart.ecommerce.controlador;
 
 import com.ashyaart.ecommerce.dao.AdminDAO;
+import com.ashyaart.ecommerce.util.AdminLog;
 import com.ashyaart.ecommerce.util.ConectorBD;
 import java.io.IOException;
 import java.sql.Connection;
@@ -46,6 +47,11 @@ public class LoginServlet extends HttpServlet {
                     // Iniciar sesión
                     HttpSession sesion = request.getSession();
                     sesion.setAttribute("adminEmail", email);
+                    
+                    //Almaceno el registro en el Log admin_access.log por seguridad con el email, la hora-fecha y ip desde la que accede Ashya
+                    String ipAddress = request.getRemoteAddr();
+                    AdminLog.logAccess(email, ipAddress);
+
                     //Redirigir al DashBoard
                     response.sendRedirect("jsp/vistas/dashboard.jsp");
                 } else {

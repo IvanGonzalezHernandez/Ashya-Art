@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class NavigationServlet extends HttpServlet {
 
     // Método doGet que maneja las peticiones GET
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = request.getParameter("page"); // Obtiene el parámetro 'page' de la URL.
         String destino = "index.jsp"; // Página por defecto, en caso de que 'page' no se pase o sea incorrecto.
@@ -19,7 +20,7 @@ public class NavigationServlet extends HttpServlet {
                     destino = "jsp/vistas/home.jsp";  // Si 'page' es 'home', se redirige a la página de inicio.
                     break;
                 case "workshops":
-                    destino = "WorkshopsServicesServlet";  // Si 'page' es 'workshops', se redirige a la página de talleres y servicios.
+                    destino = "jsp/vistas/workshops-services.jsp";  // Si 'page' es 'workshops', se redirige a la página de talleres y servicios.
                     break;
                 case "calendar":
                     destino = "jsp/vistas/calendar.jsp";  // Si 'page' es 'calendar', se redirige a la página de calendarios generales.
@@ -41,6 +42,7 @@ public class NavigationServlet extends HttpServlet {
     }
 
     // Método doPost que redirige todas las solicitudes POST al mismo comportamiento que doGet
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);  // Llama al método doGet en caso de ser una solicitud POST.
     }

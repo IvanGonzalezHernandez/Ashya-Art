@@ -1,6 +1,7 @@
 // Importaciones necesarias para trabajar con Stripe y JSON
 package com.ashyaart.ecommerce.controlador;
 
+import com.ashyaart.ecommerce.util.SuccessLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stripe.Stripe;
@@ -10,7 +11,6 @@ import com.stripe.param.checkout.SessionCreateParams; // Parámetros para crear 
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -31,7 +31,7 @@ public class CheckoutServlet extends HttpServlet {
     // Método que maneja la solicitud POST del Checkout
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         // Establecer encabezados CORS para permitir solicitudes desde cualquier origen
         response.setHeader("Access-Control-Allow-Origin", "*");  // Permitir solicitudes desde cualquier origen
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS"); // Métodos permitidos
@@ -46,7 +46,7 @@ public class CheckoutServlet extends HttpServlet {
         // Establecer la clave secreta de Stripe para autenticar la solicitud
         Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx"; // Sustituye con tu clave real
 
-        // Leer el cuerpo de la solicitud (JSON) y convertirlo en un objeto de tipo Producto
+        // Leer los datos enviados como JSON
         BufferedReader reader = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -55,10 +55,23 @@ public class CheckoutServlet extends HttpServlet {
         }
         String json = jsonBuilder.toString();
 
-        // Usamos Gson para convertir el JSON recibido en una lista de productos
+        // Usar Gson para convertir el JSON en un objeto de tipo Map
         Gson gson = new Gson();
-        java.lang.reflect.Type listType = new TypeToken<List<Producto>>() {}.getType();
-        List<Producto> carrito = gson.fromJson(json, listType);
+        java.lang.reflect.Type mapType = new TypeToken<java.util.Map<String, Object>>() {
+        }.getType();
+        java.util.Map<String, Object> datos = gson.fromJson(json, mapType);
+
+        // Extraer los datos del cliente y del carrito
+        java.util.Map<String, String> cliente = (java.util.Map<String, String>) datos.get("cliente");
+        List<Producto> carrito = gson.fromJson(gson.toJson(datos.get("carrito")), new TypeToken<List<Producto>>() {
+        }.getType());
+
+        // Extraer datos del cliente
+        String nombre = cliente.get("nombre");
+        String apellido = cliente.get("apellido");
+        String direccion = cliente.get("direccion");
+        String telefono = cliente.get("telefono");
+        String email = cliente.get("email");
 
         try {
             // Crear una lista de los productos que serán parte de la sesión de pago
@@ -82,20 +95,47 @@ public class CheckoutServlet extends HttpServlet {
                                 .setQuantity((long) producto.cantidad) // Cantidad del producto
                                 .build()
                 );
+
+                // Log para registrar cada producto comprado en success.log //AQUI HE CREADO EL LOG SUCCES Y EL DE CANCEL EL DE CANCEL NO LO HE USADO TODAVIA.
+                SuccessLog.logPurchase(producto.nombre, producto.precio, producto.cantidad);
             }
 
             // Crear los parámetros de la sesión de pago de Stripe
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT) // Modo de la sesión (pago)
-                    .setCustomerEmail("email@cliente.com") // Email del cliente (opcional)
                     .setAllowPromotionCodes(Boolean.TRUE) // Permitir el uso de códigos de promoción
-                    .setSuccessUrl("http://localhost:8080/Ashya-Art/jsp/vistas/success.jsp") // URL de redirección en caso de éxito
-                    .setCancelUrl("http://localhost:8080/Ashya-Art/jsp/vistas/cancel.jsp") // URL de redirección en caso de cancelación
                     .addAllLineItem(lineItems) // Agregar los productos a la sesión
+                    .setBillingAddressCollection(SessionCreateParams.BillingAddressCollection.REQUIRED) // <- Obligatorio que rellene su dirección
+                    .setShippingAddressCollection(
+                            SessionCreateParams.ShippingAddressCollection.builder()
+                                    .build()
+                    )
+                    .putMetadata("nombre", nombre) // Agregar datos del cliente a metadata
+                    .putMetadata("apellido", apellido)
+                    .putMetadata("direccion", direccion)
+                    .putMetadata("telefono", telefono)
+                    .putMetadata("email", email)
+                    .setCustomerEmail(email) // Establece el correo electrónico para el checkout
+                    .setSuccessUrl("http://localhost:8080/Ashya-Art/SuccessServlet?session_id={CHECKOUT_SESSION_ID}")
+                    .setCancelUrl("http://localhost:8080/Ashya-Art/jsp/vistas/cancel.jsp") // URL de redirección en caso de cancelación
                     .build();
 
             // Crear la sesión de pago en Stripe
             Session session = Session.create(params);
+
+            // Mostrar información útil de la sesión
+            System.out.println("===== SESIÓN DE STRIPE =====");
+            System.out.println("ID de la sesión: " + session.getId());
+            System.out.println("URL de pago: " + session.getUrl());
+            System.out.println("Estado del pago: " + session.getPaymentStatus()); // Puede ser 'unpaid', 'paid', 'no_payment_required', etc.
+            System.out.println("Método de pago: " + session.getPaymentMethodTypes()); // Tipos permitidos (ej: [card])
+            System.out.println("Email del cliente: " + session.getCustomerEmail()); // Puede estar vacío si no se ha configurado
+            System.out.println("ID del cliente (Stripe): " + session.getCustomer()); // ID del cliente en Stripe (puede ser null)
+            System.out.println("Modo de sesión: " + session.getMode()); // payment, subscription, etc.
+            System.out.println("Metadatos:");
+            System.out.println("Nombre: " + session.getMetadata().get("nombre"));
+            System.out.println("Apellido: " + session.getMetadata().get("apellido"));
+            System.out.println("Dirección: " + session.getMetadata().get("direccion"));
 
             // Enviar la URL de Stripe al cliente en formato JSON para redirigirlo a la página de pago
             response.setContentType("application/json");
