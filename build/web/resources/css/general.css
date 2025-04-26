@@ -8,3 +8,36 @@ body {
     min-height: 100vh; /* Garantiza que el body siempre ocupe al menos el 100% de la altura */
     margin: 0;
 }
+
+.btn-custom {
+    background-color: #3A9097 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+}
+
+/* Cambiar el color de fondo del modal */
+.modal-content {
+    background-color: #EFE5DB !important; /* Color claro */
+    border-radius: 8px !important;
+    border: 1px solid #ddd  !important;
+}
+
+.btn-sumar {
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.btn-restar {
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.btn-restar:hover{
+    background-color: #3A9097 !important;
+}
+
+.btn-sumar:hover{
+    background-color: #3A9097 !important;
+}

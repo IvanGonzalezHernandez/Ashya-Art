@@ -48,7 +48,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <strong>Total: <span id="cart-total">EUR 0.00</span></strong>
         </div>
-        <button id="checkout-btn" class="btn btn-success w-100">Checkout</button>
+        <button id="checkout-btn" class="btn btn-custom w-100">Checkout</button>
     </div>
 
 </div>

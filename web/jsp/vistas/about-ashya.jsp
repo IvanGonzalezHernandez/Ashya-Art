@@ -15,6 +15,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <h1>Hello World!</h1>
+        <%@ include file="../includes/formClient.jsp" %>
         <%@ include file="../includes/footer.jsp" %>
     </body>
 </html>

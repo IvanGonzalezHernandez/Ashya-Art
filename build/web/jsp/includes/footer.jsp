@@ -34,7 +34,7 @@
                 <p>Be the first to see our special offers.</p>
                 <div class="input-group">
                     <input type="email" class="form-control shadow-sm" placeholder="Enter your email">
-                    <button id="button" class="btn btn-dark shadow-sm">Subscribe</button>
+                    <button id="button" class="btn shadow-sm" style="background-color: #3A9097 !important; color: #ffffff;">Subscribe</button>
                 </div>
             </div>
         </div>

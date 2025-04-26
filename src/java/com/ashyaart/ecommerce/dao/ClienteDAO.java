@@ -12,7 +12,7 @@ public class ClienteDAO {
 
     // Método para guardar un cliente
     public boolean guardarCliente(Connection conexion, Cliente cliente) {
-        String sql = "INSERT INTO clientes (nombre, apellido, direccion, telefono, email, idStripe) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT IGNORE INTO clientes (nombre, apellido, direccion, telefono, email, idStripe) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNombre());  // Asignar nombre

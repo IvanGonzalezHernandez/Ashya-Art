@@ -34,7 +34,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Introduce tu contraseña" required>
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" name="button" value="login" type="submit">Iniciar Sesión</button>
+                    <button class="btn btn-custom" name="button" value="login" type="submit">Iniciar Sesión</button>
                 </div>
             </form>
         </div>

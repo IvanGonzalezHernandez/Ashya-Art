@@ -8,20 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCarrito = document.getElementById("cart-total");
     const botonCheckout = document.getElementById("checkout-btn");
 
-    // Funciones para actualizar el carrito
+    // Actualiza el contador del carrito
     function actualizarContadorCarrito() {
         const cantidadTotal = carrito.reduce((acc, producto) => acc + producto.cantidad, 0);
         contadorCarrito.innerText = cantidadTotal;
-        actualizarTotalCarrito();
-        guardarCarrito();
+        actualizarTotalCarrito(); // Actualiza el precio total
+        guardarCarrito();         // Guarda el carrito en localStorage
     }
 
+    // Calcula y actualiza el total a pagar
     function actualizarTotalCarrito() {
         const total = carrito.reduce((acc, producto) => acc + producto.precio * producto.cantidad, 0);
         totalCarrito.innerText = `EUR ${total.toFixed(2)}`;
         botonCheckout.style.display = carrito.length > 0 ? "block" : "none";
     }
 
+    // Muestra los productos del carrito en el DOM
     function cargarProductosCarrito() {
         contenedorCarrito.innerHTML = '';
         if (carrito.length === 0) {
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // Genera HTML dinámicamente por cada producto
         carrito.forEach((producto, index) => {
             const item = document.createElement("div");
             item.classList.add("d-flex", "align-items-center", "mb-3");
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="d-flex align-items-center">
                         <button class="btn btn-outline-primary btn-sm btn-restar">-</button>
                         <span class="mx-2">${producto.cantidad}</span>
-                        <button class="btn btn-outline-primary btn-sm btn-sumar">+</button>
+                        <button class="btn btn-sm btn-sumar">+</button>
                         <button class="btn btn-sm ms-3 btn-eliminar"><i class="bi bi-trash fs-4"></i></button>
                     </div>
                 </div>
@@ -50,10 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
             contenedorCarrito.appendChild(item);
         });
 
-        actualizarTotalCarrito();
+        actualizarTotalCarrito(); // Recalcula el total
     }
 
-    // Función para agregar productos al carrito desde el modal
+    // Agrega productos al carrito desde el modal
     function agregarAlCarritoDesdeModal() {
         const courseSelect = document.getElementById("courseSelect");
         if (!courseSelect)
@@ -63,14 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!selectedOption)
             return;
 
+        // Construye el objeto producto desde los atributos del <option>
         const nuevoCurso = {
-            id: selectedOption.value,
+            id: selectedOption.getAttribute("data-id"),
             nombre: selectedOption.text,
             precio: parseFloat(selectedOption.getAttribute("data-price")),
             imagen: selectedOption.getAttribute("data-img"),
+            fecha: selectedOption.getAttribute("data-date"),
+            hora: selectedOption.getAttribute("data-time"),
             cantidad: 1
         };
 
+        // Si ya existe el producto, suma cantidad, si no, lo agrega
         const itemExistente = carrito.find(item => item.id === nuevoCurso.id);
         if (itemExistente) {
             itemExistente.cantidad++;
@@ -82,13 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarContadorCarrito();
     }
 
+    // Manejo de clics dentro del carrito (sumar/restar/eliminar)
     contenedorCarrito.addEventListener("click", (event) => {
         const button = event.target.closest("button.btn-eliminar");
         if (button) {
             const index = Number(button.closest("div[data-index]").getAttribute("data-index"));
             if (isNaN(index))
                 return;
-            carrito.splice(index, 1);
+            carrito.splice(index, 1); // Elimina producto
             cargarProductosCarrito();
             actualizarContadorCarrito();
         } else if (event.target.classList.contains("btn-sumar")) {
@@ -108,10 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Guarda el carrito en localStorage
     function guardarCarrito() {
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
 
+    // Carga el carrito desde localStorage
     function cargarCarritoDesdeLocalStorage() {
         const carritoGuardado = localStorage.getItem("carrito");
         if (carritoGuardado) {
@@ -121,17 +131,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    cargarCarritoDesdeLocalStorage();
+    cargarCarritoDesdeLocalStorage(); // Carga datos si existen
 
-    document.getElementById("addToCartButton").addEventListener("click", agregarAlCarritoDesdeModal);
+    // Evento al hacer clic en "Agregar al carrito" desde el modal
+    const addToCartButton = document.getElementById("addToCartButton");
+    if (addToCartButton) {
+        addToCartButton.addEventListener("click", agregarAlCarritoDesdeModal);
+    }
 
-    window.onload = function () {
-        document.getElementById("checkout-btn").addEventListener("click", () => {
-            const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
-            modal.show();
+    // Evento para mostrar el modal del formulario cliente al hacer checkout
+    const btn = document.getElementById("checkout-btn");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            const modal = document.getElementById("clienteModal");
+            if (modal) {
+                const bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+            }
         });
+    }
 
-        document.getElementById("cliente-form").addEventListener("submit", async (e) => {
+    const clienteForm = document.getElementById("cliente-form");
+    if (clienteForm) {
+        clienteForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -144,12 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 email: document.getElementById("correo").value.trim()
             };
 
-
             const datosCheckout = {
                 cliente: cliente,
                 carrito: carrito
             };
-
 
             try {
                 const response = await fetch("http://localhost:8080/Ashya-Art/CheckoutServlet", {
@@ -160,9 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await response.json();
 
-
                 if (data.url) {
-                    window.location.href = data.url;  // Solo redirige después de todo
+                    window.location.href = data.url;
                 } else {
                     alert("No se recibió la URL de Stripe");
                 }
@@ -171,11 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Error al conectar con el servidor");
             }
         });
-
-
-    };
-
-
+    }
 
 });
- 

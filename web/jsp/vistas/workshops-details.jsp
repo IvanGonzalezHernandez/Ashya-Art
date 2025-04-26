@@ -44,6 +44,7 @@
     </head>
     <body>
         <%@ include file="../includes/header.jsp" %>  <!-- Incluir el encabezado común del sitio -->
+        <%@ include file="../includes/formClient.jsp" %>
 
         <div class="container my-5">  <!-- Contenedor principal de la página -->
             <div class="row justify-content-center">  <!-- Fila centrada para mostrar el contenido -->

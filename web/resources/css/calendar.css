@@ -1,10 +1,9 @@
  body {
     font-family: Arial, sans-serif;
     background-color: #F9F3EC;
-    text-align: center;
 }
 
-.container {
+.containerCalendar {
     max-width: 900px;
     margin: auto;
 }
@@ -57,9 +56,3 @@
     border-radius: 5px;
 }
 
-/* Cambiar el color de fondo del modal */
-.modal-content {
-    background-color: #EFE5DB; /* Color claro */
-    border-radius: 8px;
-    border: 1px solid #ddd;
-}

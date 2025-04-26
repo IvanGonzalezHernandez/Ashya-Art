@@ -24,6 +24,14 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.AdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.CancelServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CoursesServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.CoursesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
@@ -51,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelServlet</servlet-name>
+        <url-pattern>/CancelServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CoursesServlet</servlet-name>
+        <url-pattern>/CoursesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

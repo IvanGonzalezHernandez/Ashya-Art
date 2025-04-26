@@ -15,6 +15,7 @@
     </head>
     <body>
         <%@ include file="../includes/header.jsp" %>
+        <%@ include file="../includes/formClient.jsp" %>
         <div class="container mt-4">
 
             <!-- Barra de navegación con pestañas -->

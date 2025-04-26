@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Continuar al pago</button>
+                    <button type="submit" class="btn btn-custom">Continuar al pago</button>
                 </div>
             </form>
         </div>
