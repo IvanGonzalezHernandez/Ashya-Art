@@ -81,13 +81,11 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-
         // Crear la conexión a la base de datos
         ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
         Connection conexion = conector.getConexion();
 
-        // Lógica para manejar la acción del formulario
+        // Recoger la acción del formulario
         String action = request.getParameter("action");
 
         if ("insertarCurso".equals(action)) {
@@ -100,41 +98,74 @@ public class AdminServlet extends HttpServlet {
             String idioma = request.getParameter("idioma");
             String img = request.getParameter("img"); // Nueva propiedad
 
-            // Crear el objeto curso
+            // Crear el objeto Curso
             Cursos curso = new Cursos(nombre, subtitulo, descripcion, precio, nivel, idioma, img);
             CursosDAO cursosDAO = new CursosDAO();
             boolean insertado = cursosDAO.insertarCurso(conexion, curso);
 
-            // Redirigir a la página correspondiente con un mensaje
+            // Redirigir según el resultado
             if (insertado) {
-                response.sendRedirect("jsp/vistas/dashboard.jsp?mensaje=Curso+creado+correctamente");
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Curso+creado+correctamente");
             } else {
-                response.sendRedirect("jsp/vistas/dashboard.jsp?error=No+se+pudo+crear+el+curso");
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+crear+el+curso");
             }
-            return;
 
         } else if ("insertarFechaCurso".equals(action)) {
-            // Recoger parámetros del formulario para asignar fecha al curso
+            // Recoger parámetros para asignar fecha
             int idCurso = Integer.parseInt(request.getParameter("id_curso"));
             Date fecha = Date.valueOf(request.getParameter("fecha"));
             int plazasDisponibles = Integer.parseInt(request.getParameter("plazas_disponibles"));
             String hora = request.getParameter("hora");
 
-            // Crear el objeto CursoDAO
             CursosDAO cursosDAO = new CursosDAO();
             boolean fechaAsignada = cursosDAO.asignarFechaCurso(conexion, idCurso, fecha, hora, plazasDisponibles);
 
-            // Redirigir con un mensaje dependiendo de si la fecha fue asignada correctamente
             if (fechaAsignada) {
-                response.sendRedirect("jsp/vistas/dashboard.jsp?mensaje=Fecha+asignada+correctamente");
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Fecha+asignada+correctamente");
             } else {
-                response.sendRedirect("jsp/vistas/dashboard.jsp?error=No+se+pudo+asignar+la+fecha");
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+asignar+la+fecha");
             }
-            return;
+
+        } else if ("eliminarCurso".equals(action)) {
+            // Recoger el ID del curso a eliminar
+            int idCurso = Integer.parseInt(request.getParameter("id"));
+
+            CursosDAO cursosDAO = new CursosDAO();
+            Cursos cursoEliminado = cursosDAO.obtenerCursoPorId(conexion, idCurso);
+            cursosDAO.insertarCursoEliminado(conexion, cursoEliminado);
+            boolean eliminado = cursosDAO.eliminarCurso(conexion, idCurso);
+
+            if (eliminado) {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Curso+eliminado+correctamente");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+eliminar+el+curso");
+            }
+        } else if ("editarCurso".equals(action)) {
+            // Recoger los parámetros del formulario para editar el curso
+            int idCurso = Integer.parseInt(request.getParameter("id"));
+            String nombre = request.getParameter("nombre");
+            String subtitulo = request.getParameter("subtitulo");
+            String descripcion = request.getParameter("descripcion");
+            double precio = Double.parseDouble(request.getParameter("precio"));
+            String nivel = request.getParameter("nivel");
+            String idioma = request.getParameter("idioma");
+            String img = request.getParameter("img");
+
+            // Crear el objeto Curso con los datos del formulario
+            Cursos curso = new Cursos(idCurso, nombre, subtitulo, descripcion, precio, nivel, idioma, img);
+            CursosDAO cursosDAO = new CursosDAO();
+            boolean actualizado = cursosDAO.actualizarCurso(conexion, curso);
+
+            // Redirigir según el resultado
+            if (actualizado) {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Curso+actualizado+correctamente");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+actualizar+el+curso");
+            }
         } else {
-            // Otra lógica según el tipo de acción
-            response.sendRedirect("jsp/vistas/dashboard.jsp?error=Acción+no+válida");
-            return;
+            // Acción no válida
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=Accion+no+valida");
         }
     }
+
 }

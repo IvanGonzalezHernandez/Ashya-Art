@@ -1,7 +1,6 @@
 package com.ashyaart.ecommerce.controlador;
 
 import com.ashyaart.ecommerce.dao.ClienteDAO;
-import com.ashyaart.ecommerce.dao.CursoDAO;
 import com.ashyaart.ecommerce.dao.CursosDAO;
 import com.ashyaart.ecommerce.modelo.Cliente;
 import com.ashyaart.ecommerce.modelo.ProductoCarrito;

@@ -181,4 +181,86 @@ public class CursosDAO {
         return reservas;
     }
 
+    // Método para obtener un curso por su ID
+    public Cursos obtenerCursoPorId(Connection conexion, int idCurso) {
+        String sql = "SELECT * FROM cursos WHERE id_curso = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, idCurso);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Cursos(
+                            rs.getInt("id_curso"),
+                            rs.getString("nombre"),
+                            rs.getString("subtitulo"),
+                            rs.getString("descripcion"),
+                            rs.getDouble("precio"),
+                            rs.getString("nivel"),
+                            rs.getString("idioma"),
+                            rs.getString("img") // Se recupera la imagen
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null si no se encuentra el curso
+    }
+
+    // Método para insertar un curso en la tabla de cursos eliminados
+    public boolean insertarCursoEliminado(Connection conexion, Cursos curso) {
+        String sql = "INSERT INTO cursos_eliminados (id, nombre, subtitulo, descripcion, precio, nivel, idioma, fecha_eliminacion)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, curso.getId());
+            stmt.setString(2, curso.getNombre());
+            stmt.setString(3, curso.getSubtitulo());
+            stmt.setString(4, curso.getDescripcion());
+            stmt.setDouble(5, curso.getPrecio());
+            stmt.setString(6, curso.getNivel());
+            stmt.setString(7, curso.getIdioma());
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Si se insertaron filas, la operación fue exitosa
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // En caso de error, devolvemos false
+    }
+
+    // Método para eliminar un curso de la tabla cursos
+    public boolean eliminarCurso(Connection conexion, int idCurso) {
+        String sql = "DELETE FROM cursos WHERE id_curso = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, idCurso);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Si se eliminaron filas, la operación fue exitosa
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // En caso de error, devolvemos false
+    }
+
+    // Método para actualizar un curso en la base de datos
+    public boolean actualizarCurso(Connection conexion, Cursos curso) {
+        String sql = "UPDATE cursos SET nombre = ?, subtitulo = ?, descripcion = ?, precio = ?, nivel = ?, idioma = ?, img = ? WHERE id_curso = ?";
+
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, curso.getNombre());
+            stmt.setString(2, curso.getSubtitulo());
+            stmt.setString(3, curso.getDescripcion());
+            stmt.setDouble(4, curso.getPrecio());
+            stmt.setString(5, curso.getNivel());
+            stmt.setString(6, curso.getIdioma());
+            stmt.setString(7, curso.getImg());
+            stmt.setInt(8, curso.getId());
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;  // Retorna true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // Retorna false si ocurrió un error
+        }
+    }
+
 }

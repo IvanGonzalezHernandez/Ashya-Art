@@ -32,6 +32,14 @@
         <servlet-name>CoursesServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.CoursesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetCursosServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.ResetCursosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GiftCardServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.GiftCardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
@@ -67,6 +75,14 @@
     <servlet-mapping>
         <servlet-name>CoursesServlet</servlet-name>
         <url-pattern>/CoursesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetCursosServlet</servlet-name>
+        <url-pattern>/ResetCursosServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GiftCardServlet</servlet-name>
+        <url-pattern>/GiftCardServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

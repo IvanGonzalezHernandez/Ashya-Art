@@ -30,6 +30,7 @@
     </head>
     <body>
         <%@ include file="../includes/header.jsp" %>
+        <%@ include file="../includes/formClient.jsp" %>
 
         <div class="failed-container d-flex flex-column justify-content-center align-items-center text-center w-100">
             <h1 class="text-danger fw-bold">Payment Canceled!</h1>

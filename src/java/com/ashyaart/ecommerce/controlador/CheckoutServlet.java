@@ -68,11 +68,11 @@ public class CheckoutServlet extends HttpServlet {
                                 .setPriceData(
                                         SessionCreateParams.LineItem.PriceData.builder()
                                                 .setCurrency("eur")
-                                                .setUnitAmount((long) producto.getPrecio())
+                                                .setUnitAmount((long) producto.getPrecio() * 100)
                                                 .setProductData(
                                                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                 .setName(producto.getNombre())
-                                                                .setDescription("Hermoso vaso hecho a mano con diseño único.")
+                                                                .setDescription("Reserva para el día " + producto.getFecha() + " a las " + producto.getHora())
                                                                 .build()
                                                 )
                                                 .build()

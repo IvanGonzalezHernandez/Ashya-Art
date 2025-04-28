@@ -1,13 +1,11 @@
 package com.ashyaart.ecommerce.controlador;
 
-import com.ashyaart.ecommerce.dao.CursoDAO;
+
 import com.ashyaart.ecommerce.dao.CursosDAO;
-import com.ashyaart.ecommerce.modelo.Curso;
 import com.ashyaart.ecommerce.modelo.Cursos;
 import com.ashyaart.ecommerce.util.ConectorBD;
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -25,11 +23,6 @@ public class ContextInit implements ServletContextListener {
         // Crear la conexión a la base de datos
         ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
         Connection conexion = conector.getConexion();
-        
-        // Obtener todos los cursos y guardarlos en la aplicación
-        CursoDAO cursoDAO = new CursoDAO();
-        List<Curso> cursos = cursoDAO.obtenerTodosCursos(conexion);
-        sce.getServletContext().setAttribute("cursos", cursos);
         
         //Obtener todos los cursos(bueno)
         CursosDAO cursosDAO = new CursosDAO();

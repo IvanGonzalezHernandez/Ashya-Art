@@ -1,8 +1,4 @@
-<%@page import="com.ashyaart.ecommerce.modelo.Curso"%>
 <%@page import="java.util.List"%>
-<%
-    List<Curso> cursos = (List<Curso>) application.getAttribute("cursos");
-%>
 
 <!-- Contenedor principal del calendario -->
 <div class="containerCalendar container py-5 text-center">

@@ -19,7 +19,8 @@ public class CoursesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         // Crear la conexión a la base de datos
         ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
