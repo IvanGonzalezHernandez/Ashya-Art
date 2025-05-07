@@ -1,11 +1,15 @@
 package com.ashyaart.ecommerce.controlador;
 
+import com.ashyaart.ecommerce.dao.AdminDAO;
 import com.ashyaart.ecommerce.dao.ClienteDAO;
 import com.ashyaart.ecommerce.dao.CursosDAO;
+import com.ashyaart.ecommerce.dao.TarjetaRegaloDAO;
 import com.ashyaart.ecommerce.modelo.Cliente;
 import com.ashyaart.ecommerce.modelo.Cursos;
 import com.ashyaart.ecommerce.modelo.Reserva;
+import com.ashyaart.ecommerce.modelo.TarjetaRegalo;
 import com.ashyaart.ecommerce.util.ConectorBD;
+import com.ashyaart.ecommerce.util.Hash;
 import com.google.gson.Gson;
 
 import javax.servlet.http.*;
@@ -55,6 +59,23 @@ public class AdminServlet extends HttpServlet {
             // Enviar la respuesta con los datos de cursos en formato JSON
             response.getWriter().write(json);
 
+        } else if ("cursosCliente".equals(tipo)) {
+            String email = request.getParameter("email");
+
+            CursosDAO cursosDAO = new CursosDAO();
+            List<Cursos> cursosCliente = null;
+            try {
+                cursosCliente = cursosDAO.obtenerCursosPorEmail(conexion, email);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(cursosCliente);
+
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+
         } else if ("reservas".equals(tipo)) {
             // Obtener la lista de reservas
             CursosDAO reservaDAO = new CursosDAO();
@@ -71,7 +92,17 @@ public class AdminServlet extends HttpServlet {
 
             // Enviar la respuesta con los datos de reservas en formato JSON
             response.getWriter().write(json);
+        } else if ("tarjetas".equals(tipo)) {
+            // Obtener la lista de tarjetas regalo
+            TarjetaRegaloDAO tarjetaDAO = new TarjetaRegaloDAO();
+            List<TarjetaRegalo> listaTarjetas = tarjetaDAO.obtenerTodasLasTarjetasRegalo(conexion);
 
+            // Convertir la lista a JSON
+            Gson gson = new Gson();
+            String json = gson.toJson(listaTarjetas);
+
+            // Enviar la respuesta
+            response.getWriter().write(json);
         } else {
             // Si el parámetro tipo no es válido, enviar un error
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -139,6 +170,32 @@ public class AdminServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Curso+eliminado+correctamente");
             } else {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+eliminar+el+curso");
+            }
+
+        } else if ("cambiarContrasena".equals(action)) {
+
+            String email = request.getParameter("email");
+            String nuevaPassword = request.getParameter("nuevaPassword");
+            String confirmarPassword = request.getParameter("confirmarPassword");
+
+            if (nuevaPassword != null && nuevaPassword.equals(confirmarPassword)) {
+                try {
+                    String hashedPassword = Hash.hashPassword(nuevaPassword); // << Aquí haces el hash
+
+                    AdminDAO adminDAO = new AdminDAO();
+                    boolean actualizado = adminDAO.actualizarPasswordPorEmail(conexion, email, hashedPassword); // << Usas el hash
+
+                    if (actualizado) {
+                        response.sendRedirect("jsp/vistas/dashboard.jsp?mensaje=Contraseña+actualizada+correctamente");
+                    } else {
+                        response.sendRedirect("jsp/vistas/dashboard.jsp?error=No+se+pudo+actualizar+la+contraseña");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.sendRedirect("jsp/vistas/dashboard.jsp?error=Error+al+hashear+la+contraseña");
+                }
+            } else {
+                response.sendRedirect("jsp/vistas/dashboard.jsp?error=Las+contraseñas+no+coinciden");
             }
         } else if ("editarCurso".equals(action)) {
             // Recoger los parámetros del formulario para editar el curso

@@ -36,4 +36,21 @@ public class AdminDAO {
         return false;  // El administrador no existe o las credenciales no coinciden
     }
 
+    // Método para actualizar la contraseña del administrador usando el email
+    public boolean actualizarPasswordPorEmail(java.sql.Connection conexion, String email, String nuevaPassword) {
+        String sql = "UPDATE administrador SET password = ? WHERE email = ?";
+
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setString(1, nuevaPassword);
+            pstmt.setString(2, email);
+
+            int filasActualizadas = pstmt.executeUpdate();
+            return filasActualizadas == 1; // Aseguramos que solo se haya actualizado uno
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }

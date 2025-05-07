@@ -1,7 +1,9 @@
 package com.ashyaart.ecommerce.controlador;
 
 import com.ashyaart.ecommerce.dao.CursosDAO;
+import com.ashyaart.ecommerce.dao.TarjetaRegaloDAO;
 import com.ashyaart.ecommerce.modelo.Cursos;
+import com.ashyaart.ecommerce.modelo.TarjetaRegalo;
 import com.ashyaart.ecommerce.util.ConectorBD;
 import java.io.IOException;
 import java.sql.Connection;
@@ -31,8 +33,13 @@ public class ResetCursosServlet extends HttpServlet {
             if (conexion != null) {
 
                 CursosDAO cursosDAO = new CursosDAO();
-                List<Cursos> cursoss = cursosDAO.obtenerTodosLosCursos(conexion);
-                getServletContext().setAttribute("listaCursos", cursoss);
+                List<Cursos> cursos = cursosDAO.obtenerTodosLosCursos(conexion);
+                getServletContext().setAttribute("listaCursos", cursos);
+
+                // Obtener todas las plantillas de tarjetas regalo
+                TarjetaRegaloDAO tarjetaRegaloDAO = new TarjetaRegaloDAO();
+                List<TarjetaRegalo> tarjetasRegalo = tarjetaRegaloDAO.obtenerTodasLasTarjetasRegalo(conexion);
+                getServletContext().setAttribute("listaTarjetasRegalo", tarjetasRegalo);
 
                 actualizado = true;
                 conexion.close();
@@ -44,9 +51,9 @@ public class ResetCursosServlet extends HttpServlet {
 
         // Redirigir según el resultado
         if (actualizado) {
-            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Listas+de+cursos+actualizadas+correctamente");
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Listas+de+cursos+y+tarjetas+actualizadas+correctamente");
         } else {
-            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudieron+actualizar+las+listas+de+cursos");
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudieron+actualizar+las+listas+de+cursos+y+tarjetas");
         }
     }
 

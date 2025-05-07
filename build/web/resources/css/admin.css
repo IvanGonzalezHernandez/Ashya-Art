@@ -37,3 +37,47 @@ main {
 .tab-pane.active {
     opacity: 1;
 }
+
+
+
+
+
+/* Estilo para el acordeón */
+.accordion-button {
+    background-color: #EFE5DB;  /* Fondo del botón */
+    color: #000;  /* Color del texto */
+    border: 1px solid #EFE5DB;  /* Borde del botón */
+}
+
+.accordion-button:focus {
+    box-shadow: none;  /* Elimina el brillo de enfoque */
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #D1C7B7;  /* Color de fondo cuando el acordeón está abierto */
+}
+
+.accordion-button.collapsed {
+    background-color: #EFE5DB;  /* Color de fondo cuando el acordeón está cerrado */
+}
+
+.accordion-item {
+    border: 1px solid #EFE5DB;  /* Borde alrededor del acordeón */
+    margin-bottom: 10px;  /* Espacio entre los ítems del acordeón */
+}
+
+.accordion-body {
+    background-color: #EFE5DB;  /* Fondo del cuerpo del acordeón */
+    color: #000;  /* Color del texto */
+}
+
+.accordion-header {
+    background-color: #EFE5DB;  /* Fondo del encabezado del acordeón */
+}
+
+.accordion-button:hover {
+    background-color: #D1C7B7;  /* Color de fondo al pasar el mouse sobre el botón */
+}
+
+
+

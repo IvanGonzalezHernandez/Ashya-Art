@@ -263,4 +263,36 @@ public class CursosDAO {
         }
     }
 
+    public List<Cursos> obtenerCursosPorEmail(Connection conexion, String email) throws SQLException {
+        List<Cursos> cursos = new ArrayList<>();
+
+        // Consulta para obtener los cursos reservados por el usuario filtrando por email
+        String query = "SELECT c.id_curso, c.nombre, c.subtitulo, c.descripcion, c.precio, c.nivel, c.idioma, c.img "
+                + "FROM reserva r "
+                + "JOIN curso_fecha cf ON r.id_fecha = cf.id_fecha "
+                + "JOIN cursos c ON cf.id_curso = c.id_curso "
+                + "WHERE r.email = ?";
+
+        try (PreparedStatement stmt = conexion.prepareStatement(query)) {
+            stmt.setString(1, email);  // Establecer el email en la consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int idCurso = rs.getInt("id_curso");
+                    String nombre = rs.getString("nombre");
+                    String subtitulo = rs.getString("subtitulo");
+                    String descripcion = rs.getString("descripcion");
+                    double precio = rs.getDouble("precio");
+                    String nivel = rs.getString("nivel");
+                    String idioma = rs.getString("idioma");
+                    String img = rs.getString("img");
+
+                    // Crear el objeto Curso con los datos obtenidos
+                    Cursos curso = new Cursos(idCurso, nombre, subtitulo, descripcion, precio, nivel, idioma, img);
+                    cursos.add(curso);
+                }
+            }
+        }
+        return cursos;
+    }
+
 }

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    let carrito = []; // Carrito donde se almacenarán los productos seleccionados
+    let carrito = []; // Carrito donde se almacenarán los productos seleccionados (cursos y tarjetas de regalo)
 
     // Elementos del DOM que se van a manipular
     const contenedorCarrito = document.getElementById("carrito-items");
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Genera HTML dinámicamente por cada producto
+        // Genera HTML dinámicamente por cada producto (curso o tarjeta de regalo)
         carrito.forEach((producto, index) => {
             const item = document.createElement("div");
             item.classList.add("d-flex", "align-items-center", "mb-3");
@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarTotalCarrito(); // Recalcula el total
     }
 
-    // Agrega productos al carrito desde el modal
-    function agregarAlCarritoDesdeModal() {
+    // Agrega productos al carrito desde el modal de curso
+    function agregarAlCarritoDesdeModalCurso() {
         const courseSelect = document.getElementById("courseSelect");
         if (!courseSelect)
             return;
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!selectedOption)
             return;
 
-        // Construye el objeto producto desde los atributos del <option>
+        // Construye el objeto producto para el curso
         const nuevoCurso = {
             id: selectedOption.getAttribute("data-id"),
             nombre: selectedOption.text,
@@ -74,10 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
             imagen: selectedOption.getAttribute("data-img"),
             fecha: selectedOption.getAttribute("data-date"),
             hora: selectedOption.getAttribute("data-time"),
-            cantidad: 1
+            cantidad: 1,
+            tipo: "curso"
         };
 
-        // Si ya existe el producto, suma cantidad, si no, lo agrega
+        // Si ya existe el curso, suma cantidad, si no, lo agrega
         const itemExistente = carrito.find(item => item.id === nuevoCurso.id);
         if (itemExistente) {
             itemExistente.cantidad++;
@@ -87,6 +88,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cargarProductosCarrito();
         actualizarContadorCarrito();
+    }
+
+    // Agrega tarjetas de regalo al carrito
+    function agregarAlCarritoDesdeModalTarjeta() {
+        const tarjetaLinks = document.querySelectorAll(".agregar-tarjeta");
+        tarjetaLinks.forEach((tarjeta) => {
+            tarjeta.addEventListener('click', function (event) {
+                event.preventDefault();  // Evitar el comportamiento por defecto del enlace
+
+                // Obtener los datos de la tarjeta
+                const id = tarjeta.getAttribute('data-id');
+                const nombre = tarjeta.getAttribute('data-nombre');
+                const precio = tarjeta.getAttribute('data-precio');
+                const imagen = tarjeta.getAttribute('data-img');
+
+                // Crear el objeto tarjeta de regalo
+                const tarjetaRegalo = {
+                    id: id,
+                    nombre: nombre,
+                    precio: parseFloat(precio), // Convertir el precio a número
+                    imagen: imagen,
+                    cantidad: 1,
+                    tipo: "tarjeta"
+                };
+
+                // Verificar si la tarjeta ya está en el carrito
+                const tarjetaExistente = carrito.find(item => item.id === id);
+
+                if (tarjetaExistente) {
+                    tarjetaExistente.cantidad++;
+                } else {
+                    carrito.push(tarjetaRegalo);
+                }
+
+                cargarProductosCarrito();
+                actualizarContadorCarrito();
+            });
+        });
     }
 
     // Manejo de clics dentro del carrito (sumar/restar/eliminar)
@@ -133,11 +172,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarCarritoDesdeLocalStorage(); // Carga datos si existen
 
-    // Evento al hacer clic en "Agregar al carrito" desde el modal
-    const addToCartButton = document.getElementById("addToCartButton");
-    if (addToCartButton) {
-        addToCartButton.addEventListener("click", agregarAlCarritoDesdeModal);
+    // Evento al hacer clic en "Agregar al carrito" desde el modal de curso
+    const addToCartButtonCurso = document.getElementById("addToCartButton");
+    if (addToCartButtonCurso) {
+        addToCartButtonCurso.addEventListener("click", agregarAlCarritoDesdeModalCurso);
     }
+
+    // Llama la función para manejar las tarjetas de regalo
+    agregarAlCarritoDesdeModalTarjeta();
 
     // Evento para mostrar el modal del formulario cliente al hacer checkout
     const btn = document.getElementById("checkout-btn");

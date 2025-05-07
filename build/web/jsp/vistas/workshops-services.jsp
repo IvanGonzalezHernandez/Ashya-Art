@@ -37,10 +37,10 @@
                     <%@ include file="../includes/workshops.jsp" %>
                 </div>
                 <div class="tab-pane fade" id="productos">
-
+                    
                 </div>
                 <div class="tab-pane fade" id="tarjetas">
-
+                    <%@ include file="../includes/giftCards.jsp" %>
                 </div>
 
             </div>

@@ -1,9 +1,16 @@
 package com.ashyaart.ecommerce.controlador;
 
+import com.ashyaart.ecommerce.dao.TarjetaRegaloDAO;
+import com.ashyaart.ecommerce.modelo.TarjetaRegalo;
+import com.ashyaart.ecommerce.util.ConectorBD;
 import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
 import com.stripe.model.Coupon;
 import com.stripe.param.CouponCreateParams;
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,32 +20,51 @@ public class GiftCardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Configurar la clave de API de Stripe
+        // Configurar la clave secreta de Stripe
         Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
 
-        // Recibir parámetros del formulario (puedes obtenerlos del request)
-        String monto = request.getParameter("precioTarjeta"); // En euros, por ejemplo 70
-        String idCupon = request.getParameter("idCupon"); // El ID del cupón, por ejemplo "tarjeta_regalo_70"
+        // Conexión a la base de datos
+        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        Connection conexion = conector.getConexion();
+
+        // Obtener parámetros del formulario
+        String precio = request.getParameter("precioTarjeta"); // El precio que el admin asigna a la tarjeta
+        String idCupon = request.getParameter("idCupon"); // El id del cupón de Stripe
+        String imagen = request.getParameter("imagen"); // La ruta de la imagen proporcionada por el admin
+
+        double precioDouble = Double.parseDouble(precio); // si viene como String
+        long precioCentimos = Math.round(precioDouble * 100);
+
+        Coupon coupon = null;
 
         try {
-            // Crear el cupón
+            // Crear cupón de Stripe
             CouponCreateParams params = CouponCreateParams.builder()
-                    .setAmountOff(Long.parseLong(monto) * 100) // Convertir a centavos
+                    .setAmountOff(precioCentimos) // Precio en céntimos
                     .setCurrency("eur")
-                    .setId(idCupon) // Usar el ID proporcionado
-                    .setDuration(CouponCreateParams.Duration.ONCE) // Cupón de un solo uso
+                    .setDuration(CouponCreateParams.Duration.ONCE) // Sólo se puede usar una vez
+                    .setName(idCupon)
                     .build();
 
-            // Crear el cupón en Stripe
-            Coupon coupon = Coupon.create(params);
+            coupon = Coupon.create(params); // Creamos el cupón
 
-            // Redirigir a dashboard.jsp con mensaje de éxito
-            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Cupon+creado+correctamente");
-        } catch (Exception e) {
-            // Manejar errores
-            e.printStackTrace();
-            // Redirigir a dashboard.jsp con mensaje de error
-            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+crear+el+cupon");
+        } catch (StripeException ex) {
+            Logger.getLogger(GiftCardServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=Error+al+crear+el+cupón");
+            return;
+        }
+
+        // Crear objeto de tarjeta regalo (plantilla) con el ID del cupón
+        TarjetaRegalo tarjeta = new TarjetaRegalo(idCupon, Double.parseDouble(precio), imagen, coupon.getId());
+
+        // Guardar en la base de datos
+        TarjetaRegaloDAO dao = new TarjetaRegaloDAO();
+        boolean guardada = dao.insertarPlantillaTarjeta(conexion, tarjeta);
+
+        if (guardada) {
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Plantilla+de+tarjeta+creada+correctamente");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=Error+al+crear+plantilla+de+tarjeta");
         }
     }
 }

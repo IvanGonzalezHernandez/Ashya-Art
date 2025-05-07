@@ -1,17 +1,19 @@
 package com.ashyaart.ecommerce.util;
 
 import com.ashyaart.ecommerce.modelo.ProductoCarrito;
-import java.io.UnsupportedEncodingException;
-
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.mail.util.ByteArrayDataSource;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
 public class EmailSender {
 
-    public static void enviarCorreoConfirmacion(String destinatario, String nombreCliente, List<ProductoCarrito> carrito) throws MessagingException, UnsupportedEncodingException {
-        String asunto = "¡Gracias por tu compra en AshYa Art!";
+    public static void enviarCorreoConfirmacion(String destinatario, String nombreCliente, List<ProductoCarrito> carrito, List<byte[]> pdfsAdjuntos) throws MessagingException, UnsupportedEncodingException {
+        String asunto = "¡Gracias por tu compra en Ashya Art!";
 
         StringBuilder cuerpoHtml = new StringBuilder();
         cuerpoHtml.append("<!DOCTYPE html>");
@@ -28,34 +30,37 @@ public class EmailSender {
 
         cuerpoHtml.append("<div class='container'>");
         cuerpoHtml.append("<h2>¡Hola ").append(nombreCliente).append("!</h2>");
-        cuerpoHtml.append("<p>Gracias por confiar en <strong>AshYa Art</strong>. Aquí tienes el resumen de tu compra:</p>");
+        cuerpoHtml.append("<p>Gracias por confiar en <strong>Ashya Art</strong>. Aquí tienes el resumen de tu compra:</p>");
         cuerpoHtml.append("<ul>");
 
         for (ProductoCarrito producto : carrito) {
             cuerpoHtml.append("<li><strong>")
                     .append(producto.getNombre()).append("</strong>");
+
             if (producto.getFecha() != null && !producto.getFecha().isEmpty()) {
                 cuerpoHtml.append(" — ").append(producto.getFecha()).append(" ").append(producto.getHora());
             }
+
             cuerpoHtml.append("<br>x").append(producto.getCantidad());
-            cuerpoHtml.append(" — <strong>").append(String.format("EUR %.2f", producto.getPrecio() / 100.0)).append("</strong></li>");
+            int precio = producto.getPrecio();
+            cuerpoHtml.append(" — <strong>").append(String.format("EUR %.2f", (double) precio)).append("</strong>");
+            cuerpoHtml.append("</li>");
         }
 
         cuerpoHtml.append("</ul>");
         cuerpoHtml.append("<div class='footer'>");
         cuerpoHtml.append("<p>Si tienes cualquier duda, responde a este correo y te ayudaremos encantados.</p>");
-        cuerpoHtml.append("<p><em>Con cariño,</em><br>El equipo de AshYa Art 💙</p>");
+        cuerpoHtml.append("<p><em>Con cariño,</em><br>El equipo de Ashya Art 💙</p>");
         cuerpoHtml.append("</div></div>");
         cuerpoHtml.append("</body></html>");
 
-        // Configuración para Gmail
+        // Configuración SMTP
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        // Cambia esto por tu correo y contraseña de aplicación
         final String usuario = "ivangonzalez.code@gmail.com";
         final String claveApp = "mjkq chsj dgdm dqya";
 
@@ -65,12 +70,33 @@ public class EmailSender {
             }
         });
 
+        // Crear mensaje
         Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(usuario, "AshYa Art"));
+        mensaje.setFrom(new InternetAddress(usuario, "Ashya Art"));
         mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
         mensaje.setSubject(asunto);
-        mensaje.setContent(cuerpoHtml.toString(), "text/html; charset=utf-8");
 
+        // Cuerpo HTML
+        MimeBodyPart cuerpoHtmlPart = new MimeBodyPart();
+        cuerpoHtmlPart.setContent(cuerpoHtml.toString(), "text/html; charset=utf-8");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(cuerpoHtmlPart);
+
+        // Adjuntar PDFs
+        if (pdfsAdjuntos != null && !pdfsAdjuntos.isEmpty()) {
+            int contador = 1;
+            for (byte[] pdf : pdfsAdjuntos) {
+                MimeBodyPart adjuntoPdf = new MimeBodyPart();
+                DataSource fuente = new ByteArrayDataSource(pdf, "application/pdf");
+                adjuntoPdf.setDataHandler(new DataHandler(fuente));
+                adjuntoPdf.setFileName("tarjeta_regalo_" + contador + ".pdf");  // Aseguramos que el nombre sea único
+                multipart.addBodyPart(adjuntoPdf);
+                contador++;  // Incrementamos el contador para que cada archivo tenga un nombre único
+            }
+        }
+
+        mensaje.setContent(multipart);
         Transport.send(mensaje);
     }
 }

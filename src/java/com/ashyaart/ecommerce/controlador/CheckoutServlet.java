@@ -63,6 +63,13 @@ public class CheckoutServlet extends HttpServlet {
         try {
             List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
             for (ProductoCarrito producto : carrito) {
+                String descripcion = "Reserva para el día " + producto.getFecha() + " a las " + producto.getHora();
+
+                // Verificar si es una tarjeta regalo y modificar la descripción
+                if (producto.getNombre().contains("Tarjeta Regalo")) {
+                    descripcion = "Tarjeta regalo de valor EUR " + producto.getPrecio() + " para usar en productos o cursos.";
+                }
+
                 lineItems.add(
                         SessionCreateParams.LineItem.builder()
                                 .setPriceData(
@@ -72,7 +79,7 @@ public class CheckoutServlet extends HttpServlet {
                                                 .setProductData(
                                                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                 .setName(producto.getNombre())
-                                                                .setDescription("Reserva para el día " + producto.getFecha() + " a las " + producto.getHora())
+                                                                .setDescription(descripcion)
                                                                 .build()
                                                 )
                                                 .build()
@@ -108,4 +115,5 @@ public class CheckoutServlet extends HttpServlet {
             throw new ServletException("Error creando sesión de Stripe", e);
         }
     }
+
 }
