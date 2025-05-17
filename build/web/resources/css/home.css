@@ -1,0 +1,11 @@
+.hero-section{
+    background-image: url('../../resources/imagenes/home/hero.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.carrousel-section, .giftCard-section{
+    background-color: #EFE5DB;
+    color: #3E3028;
+}
+

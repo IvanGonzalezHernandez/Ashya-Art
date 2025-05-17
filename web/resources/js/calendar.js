@@ -2,7 +2,7 @@ let images = {}; // Objeto donde se almacenarán los cursos agrupados por fecha
 
 // Función para obtener los cursos del servidor
 function fetchCourses() {
-    fetch("http://localhost:8080/Ashya-Art/CoursesServlet")
+    fetch("http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art/CoursesServlet")   //"http://localhost:8080/Ashya-Art/CoursesServlet"
         .then(response => {
             if (!response.ok) throw new Error("Error en la respuesta del servidor");
             return response.json();

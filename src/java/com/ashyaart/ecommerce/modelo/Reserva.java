@@ -9,8 +9,8 @@ public class Reserva {
     private String correoCliente;
     private Date fechaReserva;
     private int plazasReservadas;
-    private Date fechaCurso;  // Nueva propiedad para la fecha del curso
-    private String horaCurso; // Nueva propiedad para la hora del curso
+    private Date fechaCurso;
+    private String horaCurso;
     private String nombreCurso;
 
     // Constructor

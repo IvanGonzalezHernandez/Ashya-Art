@@ -27,7 +27,7 @@ public class ResetCursosServlet extends HttpServlet {
 
         try {
             // Crear conexión
-            ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+            ConectorBD conector = new ConectorBD();
             Connection conexion = conector.getConexion();
 
             if (conexion != null) {

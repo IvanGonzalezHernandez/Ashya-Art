@@ -22,10 +22,10 @@ public class LoginServlet extends HttpServlet {
 
         String boton = request.getParameter("button");
 
-        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
 
         switch (boton) {
             case "login":
@@ -37,8 +37,8 @@ public class LoginServlet extends HttpServlet {
                     hashedPassword = Hash.hashPassword(password);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    request.setAttribute("mensajeError", "Error al procesar la contraseña.");
-                    request.getRequestDispatcher("jsp/vistas/login.jsp").forward(request, response);
+                    session.setAttribute("mensajeError", "Error al procesar la contraseña.");
+                    response.sendRedirect("jsp/vistas/login.jsp");
                     return;
                 }
 
@@ -46,16 +46,15 @@ public class LoginServlet extends HttpServlet {
                 boolean esValido = admin.verificarAdministrador(conexion, email, hashedPassword);
 
                 if (esValido) {
-                    HttpSession sesion = request.getSession();
-                    sesion.setAttribute("adminEmail", email);
+                    session.setAttribute("adminEmail", email);
 
                     String ipAddress = request.getRemoteAddr();
                     AdminLog.logAccess(email, ipAddress);
 
                     response.sendRedirect("jsp/vistas/dashboard.jsp");
                 } else {
-                    request.setAttribute("mensajeError", "Correo o contraseña incorrectos.");
-                    request.getRequestDispatcher("jsp/vistas/login.jsp").forward(request, response);
+                    session.setAttribute("mensajeError", "Correo o contraseña incorrectos.");
+                    response.sendRedirect("jsp/vistas/login.jsp");
                 }
                 break;
 

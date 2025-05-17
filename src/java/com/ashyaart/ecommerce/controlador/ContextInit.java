@@ -21,7 +21,7 @@ public class ContextInit implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         // Crear la conexión a la base de datos
-        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
         //Obtener todos los cursos(bueno)

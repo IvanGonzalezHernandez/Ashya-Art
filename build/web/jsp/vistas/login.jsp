@@ -13,16 +13,23 @@
 
         <div class="card card-login">
             <div class="text-center mb-3">
-                <img src="../../resources/imagenes/logo/logo.png" alt="Logo Ashya" style="max-height: 80px;">
+                <img src="${pageContext.request.contextPath}/resources/imagenes/logo/logo.png" alt="Logo Ashya" style="max-height: 80px;">
             </div>
             <h3 class="text-center mb-3">Iniciar Sesión</h3>
 
-            <% String mensajeError = (String) request.getAttribute("mensajeError");
-                if (mensajeError != null) {%>
-            <div class="alert alert-danger text-center" role="alert">
+            <%
+                String mensajeError = (String) session.getAttribute("mensajeError");
+                if (mensajeError != null) {
+            %>
+            <div class="alert alert-danger fade show mt-3" role="alert">
                 <%= mensajeError%>
             </div>
-            <% }%>
+            <%
+                    session.removeAttribute("mensajeError");
+                }
+            %>
+
+
 
             <form action="../../LoginServlet" method="post">
                 <div class="mb-3">
@@ -37,6 +44,11 @@
                     <button class="btn btn-custom" name="button" value="login" type="submit">Iniciar Sesión</button>
                 </div>
             </form>
+        </div>
+
+        <!--Para evitar el error de uncaught reference del carrito-->
+        <div style="display: none">
+            <%@ include file="../includes/header.jsp" %>
         </div>
 
     </body>

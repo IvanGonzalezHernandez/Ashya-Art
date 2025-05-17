@@ -24,7 +24,7 @@ public class GiftCardServlet extends HttpServlet {
         Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
 
         // Conexión a la base de datos
-        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
         // Obtener parámetros del formulario

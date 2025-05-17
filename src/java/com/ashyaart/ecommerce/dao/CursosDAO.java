@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CursosDAO {
 
@@ -293,6 +295,24 @@ public class CursosDAO {
             }
         }
         return cursos;
+    }
+
+    public List<Map<String, Object>> obtenerReservasPorMes(Connection conexion) throws SQLException {
+        List<Map<String, Object>> resultados = new ArrayList<>();
+
+        String sql = "SELECT DATE_FORMAT(fecha_reserva, '%Y-%m') AS mes, SUM(plazas_reservadas) AS total "
+                + "FROM reserva GROUP BY mes ORDER BY mes";
+
+        try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> fila = new HashMap<>();
+                fila.put("mes", rs.getString("mes"));
+                fila.put("total", rs.getInt("total"));
+                resultados.add(fila);
+            }
+        }
+
+        return resultados;
     }
 
 }

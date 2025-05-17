@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +29,7 @@ public class AdminServlet extends HttpServlet {
         response.setContentType("application/json");
 
         // Crear la conexión a la base de datos
-        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
         // Obtener el tipo de datos solicitado, por ejemplo, "clientes", "cursos" o "reservas"
@@ -103,6 +104,21 @@ public class AdminServlet extends HttpServlet {
 
             // Enviar la respuesta
             response.getWriter().write(json);
+
+        } else if ("reservasPorMes".equals(tipo)) {
+            CursosDAO reservaDAO = new CursosDAO();
+            List<Map<String, Object>> reservasPorMes = null;
+
+            try {
+                reservasPorMes = reservaDAO.obtenerReservasPorMes(conexion);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(reservasPorMes);
+            response.getWriter().write(json);
+
         } else {
             // Si el parámetro tipo no es válido, enviar un error
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -113,7 +129,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Crear la conexión a la base de datos
-        ConectorBD conector = new ConectorBD("localhost", "ashya_art", "root", "");
+        ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
         // Recoger la acción del formulario
