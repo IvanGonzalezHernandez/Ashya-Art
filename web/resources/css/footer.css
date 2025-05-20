@@ -1,10 +1,24 @@
 footer {
-    background-color: #f8f9fa;
+    background-color: #F9F3EC !important;
+    color: #3E3028 !important;
     box-shadow: 0 4px 2px -2px gray;
     width: 100%;
     padding: 10px 0;
     text-align: center;
     position: relative; /* Garantiza que el footer no se superponga */
 }
+
+.footer-logo {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05);
+}
+
+a:hover {
+    color: #3A9097 !important;
+}
+
 
 

@@ -1,0 +1,106 @@
+/* Fondo base general de la sección */
+.hero-section {
+    background-color: #F9F3EC;
+    position: relative;
+    color: #3E3028;
+    text-align: center;
+    height: auto; /* Cambio: altura automática para evitar solapamientos */
+    padding: 2rem 1rem; /* Espacio arriba y abajo */
+}
+
+/* Contenedor con cuadrícula 2x2 */
+.hero-section .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    height: auto; /* Ajuste para que la altura crezca con el contenido */
+    position: relative;
+    z-index: 2;
+}
+
+/* Cuadrantes generales */
+.hero-section .grid-item {
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Fondo claro para las secciones de texto */
+.hero-section .text-background {
+    background-color: #EFE5DB; /* Beige claro para las cajas de texto */
+    border-radius: 10px;
+    padding: 1rem;
+    color: #3E3028;
+}
+
+/* Imágenes de fondo */
+.hero-section .bg-image-1 {
+    background: url('../../resources/imagenes/studio/Atelier_1.jpg') center center/cover no-repeat;
+    min-height: 300px; /* Altura mínima para que no se achiquen demasiado */
+    width: 100%;
+    border-radius: 10px;
+}
+
+.hero-section .bg-image-2 {
+    background: url('../../resources/imagenes/studio/Atelier_2.jpg') center center/cover no-repeat;
+    min-height: 300px; /* Igual que la primera */
+    width: 100%;
+    border-radius: 10px;
+}
+
+.studio-info-section {
+    background-color: #F9F3EC;
+    color: #3E3028; 
+}
+
+.carrousel-section{
+    background-color: #F9F3EC;
+    color: #3E3028;
+}
+
+.map-responsive {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.map-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Responsive para móviles y tablets */
+@media (max-width: 767.98px) {
+    .hero-section .grid-container {
+        display: flex;            /* Cambiar grid a flex en móvil para evitar solapamientos */
+        flex-direction: column;   /* Apilar verticalmente */
+        gap: 1rem;
+        height: auto;
+    }
+
+    .hero-section .grid-item {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    /* Ajustar imágenes para móvil */
+    .hero-section .bg-image-1,
+    .hero-section .bg-image-2 {
+        min-height: 250px;
+        aspect-ratio: 4 / 3;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        width: 100%;
+    }
+}

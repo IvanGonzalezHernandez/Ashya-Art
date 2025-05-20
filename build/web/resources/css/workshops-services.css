@@ -42,7 +42,27 @@ body {
     flex-grow: 1;
 }
 
-.card-img-top {
-    height: 350px; /* Tamaño fijo para las imágenes */
-    object-fit: cover; /* Recorta la imagen sin deformarla */
+.card {
+    border: none !important;
+    box-shadow: none;
+    margin-bottom: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: transparent !important;
+    overflow: hidden; /* evita que la imagen salga fuera al hacer zoom */
+    border-radius: 12px; /* opcional, para bordes redondeados */
 }
+
+.card-img-top {
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0; /* bordes redondeados arriba */
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+

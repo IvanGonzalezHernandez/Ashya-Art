@@ -213,8 +213,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 carrito: carrito
             };
 
+            const baseUrl = window.location.hostname.includes("localhost")
+                    ? "http://localhost:8080/Ashya-Art"
+                    : "http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art";
+
             try {
-                const response = await fetch("http://localhost:8080/Ashya-Art/CheckoutServlet", {
+                const response = await fetch(`${baseUrl}/CheckoutServlet`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(datosCheckout)

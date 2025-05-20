@@ -3,12 +3,12 @@
 <!-- Contenedor principal del calendario -->
 <div class="containerCalendar container py-5 text-center">
     <div class="controls">
-        <button class="btn btn-link text-dark" onclick="changeMonth(-1)" aria-label="Anterior">
+        <button class="btn btn-link" onclick="changeMonth(-1)" aria-label="Anterior" style="color: #3E3028;">
             <i class="bi bi-caret-left-fill" style="font-size: 1.5rem;"></i>
         </button>
         <h1 id="monthYear"></h1>
-        <button class="btn btn-link text-dark" onclick="changeMonth(1)" aria-label="Siguiente">
-            <i class="bi bi-caret-right-fill" style="font-size: 1.5rem;"></i>
+        <button class="btn btn-link" onclick="changeMonth(1)" aria-label="Siguiente" style="color: #3E3028;">
+            <i class="bi bi-caret-right-fill" style="font-size: 1.5rem; "></i>
         </button>
     </div>
 

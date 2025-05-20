@@ -32,8 +32,8 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  <!-- Definir el tipo de contenido HTML -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Asegurarse de que la página sea responsiva en dispositivos móviles -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title><%= request.getAttribute("titulo")%></title>  <!-- Título de la página que se establece en el bloque anterior -->
 
         <!-- Enlace a una hoja de estilos CSS personalizada -->

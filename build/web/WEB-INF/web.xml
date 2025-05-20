@@ -40,6 +40,14 @@
         <servlet-name>GiftCardServlet</servlet-name>
         <servlet-class>com.ashyaart.ecommerce.controlador.GiftCardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.ContactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsletterServlet</servlet-name>
+        <servlet-class>com.ashyaart.ecommerce.controlador.NewsletterServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
@@ -83,6 +91,14 @@
     <servlet-mapping>
         <servlet-name>GiftCardServlet</servlet-name>
         <url-pattern>/GiftCardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/ContactServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsletterServlet</servlet-name>
+        <url-pattern>/NewsletterServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

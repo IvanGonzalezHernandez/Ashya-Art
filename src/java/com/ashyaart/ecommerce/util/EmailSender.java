@@ -99,4 +99,55 @@ public class EmailSender {
         mensaje.setContent(multipart);
         Transport.send(mensaje);
     }
+
+    public static void enviarMensajeContacto(String nombre, String email, String mensajeUsuario) throws MessagingException, UnsupportedEncodingException {
+        String asunto = "Nuevo mensaje desde el formulario de contacto";
+
+        StringBuilder cuerpoHtml = new StringBuilder();
+        cuerpoHtml.append("<!DOCTYPE html>");
+        cuerpoHtml.append("<html lang='es'><head><meta charset='UTF-8'>");
+        cuerpoHtml.append("<style>");
+        cuerpoHtml.append("body { font-family: 'Segoe UI', sans-serif; background-color: #EFE5DB; padding: 20px; color: #333; }");
+        cuerpoHtml.append(".container { max-width: 600px; margin: auto; background: #fff9f4; border-radius: 10px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }");
+        cuerpoHtml.append("h2 { color: #3A9097; }");
+        cuerpoHtml.append("</style></head><body>");
+
+        cuerpoHtml.append("<div class='container'>");
+        cuerpoHtml.append("<h2>Nuevo mensaje de contacto</h2>");
+        cuerpoHtml.append("<p><strong>Nombre:</strong> ").append(nombre).append("</p>");
+        cuerpoHtml.append("<p><strong>Email:</strong> ").append(email).append("</p>");
+        cuerpoHtml.append("<p><strong>Mensaje:</strong><br>").append(mensajeUsuario.replace("\n", "<br>")).append("</p>");
+        cuerpoHtml.append("</div></body></html>");
+
+        // Configuración SMTP
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        final String usuario = "ivangonzalez.code@gmail.com";
+        final String claveApp = "mjkq chsj dgdm dqya";
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usuario, claveApp);
+            }
+        });
+
+        // Crear mensaje
+        Message mensaje = new MimeMessage(session);
+        mensaje.setFrom(new InternetAddress(usuario, "Formulario Ashya Art"));
+        mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(usuario)); // te llega a ti mismo
+        mensaje.setSubject(asunto);
+
+        MimeBodyPart cuerpoHtmlPart = new MimeBodyPart();
+        cuerpoHtmlPart.setContent(cuerpoHtml.toString(), "text/html; charset=utf-8");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(cuerpoHtmlPart);
+
+        mensaje.setContent(multipart);
+        Transport.send(mensaje);
+    }
 }

@@ -17,7 +17,7 @@ body {
     margin-bottom: 20px;
 }
 main {
-    background-color: #EFE5DB;
+    background-color: #F9F3EC;
     margin-left: 260px;
     padding: 20px;
     flex-grow: 1;
@@ -50,7 +50,7 @@ main {
 }
 
 .accordion-button:not(.collapsed) {
-    background-color: #D1C7B7;  /* Color de fondo cuando el acordeón está abierto */
+    background-color: #EFE5DB !important;  /* Fondo del botón */
 }
 
 .accordion-button.collapsed {
@@ -75,5 +75,9 @@ main {
     background-color: #D1C7B7;  /* Color de fondo al pasar el mouse sobre el botón */
 }
 
-
-
+.nav-link.disabled {
+    color: #6c757d !important; /* gris Bootstrap */
+    pointer-events: none;       /* bloquea clics */
+    cursor: default;            /* cursor normal */
+    opacity: 0.65;              /* semi-transparente */
+}

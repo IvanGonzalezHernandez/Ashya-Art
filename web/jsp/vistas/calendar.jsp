@@ -9,8 +9,8 @@
 <html lang="es">
 
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>Calendario de Cerámica</title>
         <%@ include file="../includes/cdn.jsp" %>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/calendar.css"/>
@@ -20,11 +20,10 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/calendar.jsp" %>
+        
+        <%@ include file="../includes/formContact.jsp" %>
 
         <%@ include file="../includes/formClient.jsp" %>
-
-
-
         <%@ include file="../includes/footer.jsp" %>
     </body>
 

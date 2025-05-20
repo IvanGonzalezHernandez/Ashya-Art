@@ -4,30 +4,25 @@
     Author     : ivang
 --%>
 
-<%@page import="com.ashyaart.ecommerce.modelo.Cursos"%>
-<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-    // Obtener la lista de cursos del atributo de la aplicación
-    List<Cursos> cursos = (List<Cursos>) application.getAttribute("listaCursos");
-%>
-
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
         <title>JSP Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css">
         <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
         <!-- Swiper CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
         <!-- Swiper JS -->
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
         <%@ include file="../includes/cdn.jsp" %>
+
+
+
     </head>
     <body>
         <%@ include file="../includes/header.jsp" %>
@@ -49,48 +44,8 @@
 
 
 
+        <%@ include file="../includes/carrousel-workshops.jsp" %>
 
-        <!-- Hero 2 - Carrusel dinámico de cursos con Swiper -->
-        <section class="carrousel-section vh-100 d-flex flex-column align-items-center justify-content-center text-center">
-            <!-- Título -->
-            <h3 class="mb-4">DISCOVER OUR CERAMIC WORKSHOPS</h3>
-
-            <!-- Swiper container -->
-            <div class="swiper swiper-cursos w-100" style="max-width: 1200px;">
-                <div class="swiper-wrapper">
-                    <%
-                        if (cursos != null && !cursos.isEmpty()) {
-                            for (int i = 0; i < cursos.size(); i++) {
-                                Cursos curso = cursos.get(i);
-                    %>
-                    <div class="swiper-slide" style="width: 320px;">
-                        <div class="position-relative">
-                            <!-- Enlace al detalle del curso -->
-                            <a href="jsp/vistas/workshops-details.jsp?curso=<%= curso.getNombre().replace(" ", "%20")%>">
-                                <img src="<%= curso.getImg()%>" alt="<%= curso.getNombre()%>" 
-                                     style="height: 400px; width: 100%; object-fit: cover; border-radius: 12px;">
-                            </a>
-                            <div class="position-absolute bottom-0 start-0 w-100 text-center text-white p-2 bg-dark bg-opacity-50">
-                                <h5 class="mb-0"><%= curso.getNombre()%></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <div class="swiper-slide" style="width: 320px;">
-                        <p class="text-white">No courses available at the moment.</p>
-                    </div>
-                    <% }%>
-                </div>
-
-                <!-- Swiper navigation -->
-                <div class="swiper-button-prev text-white"></div>
-                <div class="swiper-button-next text-white"></div>
-
-            </div>
-        </section>
 
         <!-- Hero 3 con fondo e info -->
         <section class="vh-100 position-relative text-white text-center d-flex align-items-center justify-content-center" style="background-image: url('./resources/imagenes/home/about.png'); background-size: cover; background-position: center;">
@@ -129,7 +84,7 @@
 
 
 
-
+        <%@ include file="../includes/galery.jsp" %>
 
 
         <%@ include file="../includes/formClient.jsp" %>

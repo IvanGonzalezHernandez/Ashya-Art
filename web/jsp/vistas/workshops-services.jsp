@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>JSP Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workshops-services.css"/>
         <%@ include file="../includes/cdn.jsp" %>
@@ -16,7 +17,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
-        <div class="container mt-4">
+        <div class="container-fluid mt-4">
 
             <!-- Barra de navegación con pestañas -->
             <ul class="nav nav-tabs justify-content-center" id="myTabs">
@@ -35,12 +36,15 @@
             <div class="tab-content mt-4">
                 <div class="tab-pane fade show active" id="cursos">
                     <%@ include file="../includes/workshops.jsp" %>
+                    <%@ include file="../includes/valorations.jsp" %>
                 </div>
-                <div class="tab-pane fade" id="productos">
-                    
+                <div class="tab-pane fade" id="firing">
+                    <%@ include file="../includes/firingServices.jsp" %>
+                    <%@ include file="../includes/formContact.jsp" %>
                 </div>
                 <div class="tab-pane fade" id="tarjetas">
                     <%@ include file="../includes/giftCards.jsp" %>
+                    <%@ include file="../includes/valorations.jsp" %>
                 </div>
 
             </div>

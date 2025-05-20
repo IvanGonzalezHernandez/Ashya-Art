@@ -10,13 +10,27 @@ body {
 }
 
 .btn-custom {
-    background-color: #3A9097 !important;
-    color: white !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    border-radius: 5px !important;
+  background-color: #3A9097 !important;
+  color: white !important;
+  border: none !important;
+  padding: 12px 28px !important;
+  border-radius: 10px;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 0 4px 12px rgba(58, 144, 151, 0.4);
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
+.btn-custom:hover {
+  background-color: #5bb1b8 !important; /* color más claro */
+  box-shadow: 0 6px 20px rgba(91, 177, 184, 0.5);
+}
+
+.btn-custom:active {
+  box-shadow: 0 3px 8px rgba(58, 144, 151, 0.3);
+}
 /* Cambiar el color de fondo del modal */
 .modal-content {
     background-color: #EFE5DB !important; /* Color claro */

@@ -1,0 +1,12 @@
+.about-section, .galery-container {
+    background-color: #F9F3EC;
+    color: #3E3028;
+}
+
+.hover-zoom {
+    transition: transform 0.4s ease;
+}
+
+.hover-zoom:hover {
+    transform: scale(1.05);
+}

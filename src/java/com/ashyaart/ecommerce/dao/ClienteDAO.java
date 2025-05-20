@@ -54,4 +54,18 @@ public class ClienteDAO {
 
         return lista;
     }
+    
+    // Inserta un email en la tabla newsletter
+    public boolean insertarEmail(Connection conexion, String email) {
+        String sql = "INSERT INTO newsletter (email, fecha_registro) VALUES (?, NOW())";
+
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            int filas = stmt.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

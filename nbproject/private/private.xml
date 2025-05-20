@@ -2,18 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/SuccessServlet.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/ResetCursosServlet.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/GiftCardServlet.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/AdminServlet.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/web/jsp/vistas/shop.jsp</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/util/ConectorBD.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/CoursesServlet.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/web/jsp/vistas/studio-membership.jsp</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/ContextInit.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/dao/CursosDAO.java</file>
-            <file>file:/C:/Users/ivang/Documents/NetBeansProjects/Ashya-Art/src/java/com/ashyaart/ecommerce/controlador/LoginServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -1,5 +1,5 @@
 <!-- footer.jsp -->
-<footer class="py-5 bg-light shadow-lg mt-auto">
+<footer class="py-5 shadow-lg mt-auto">
     <div class="container">
         <div class="row text-center text-md-start">
             <!-- Ubicación con Mapa de Google Maps -->
@@ -16,7 +16,7 @@
                 <p><a href="#" class="text-dark text-decoration-none">The studio</a></p>
 
                 <div class="d-flex justify-content-center justify-content-md-start gap-3">
-                    <a class="text-dark" href="https://www.instagram.com/ashya_art/?hl=es" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
+                    <a class="text-dark" href="https://www.instagram.com/ashya_art" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
                 </div>
             </div>
 
@@ -27,21 +27,38 @@
                 <p class="mb-1"><a href="#" class="text-dark text-decoration-none">Terms and Conditions</a></p>
                 <p><a href="#" class="text-dark text-decoration-none">Privacy Policy</a></p>
             </div>
-
+            
             <!-- Newsletter -->
             <div class="col-md-3">
                 <h6 class="fw-bold text-uppercase">Newsletter</h6>
                 <p>Be the first to see our special offers.</p>
-                <div class="input-group">
-                    <input type="email" class="form-control shadow-sm" placeholder="Enter your email">
-                    <button id="button" class="btn shadow-sm" style="background-color: #3A9097 !important; color: #ffffff;">Subscribe</button>
-                </div>
+                <form action="<%= request.getContextPath()%>/NewsletterServlet" method="POST" class="input-group">
+                    <input 
+                        type="email" 
+                        name="correo" 
+                        class="form-control shadow-sm" 
+                        placeholder="Enter your email" 
+                        required 
+                        aria-label="Email for newsletter"
+                        >
+                    <button 
+                        type="submit" 
+                        class="btn shadow-sm" 
+                        style="background-color: #3A9097 !important; color: #ffffff;"
+                        >
+                        Subscribe
+                    </button>
+                </form>
             </div>
-        </div>
 
-        <!-- Logo centrado abajo -->
-        <div class="text-center mt-4">
-            <img src="${pageContext.request.contextPath}/resources/imagenes/logo/logo.png" alt="Logo" width="80">
+
+            <!-- Logo centrado abajo -->
+            <a href="#">
+                <div class="text-center mt-4">
+                    <img src="${pageContext.request.contextPath}/resources/imagenes/logo/logo.png" alt="Logo" width="80" class="footer-logo">
+                </div>
+            </a>
         </div>
-    </div>
 </footer>
+
+

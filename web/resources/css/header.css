@@ -16,7 +16,7 @@
 
 /* Estilo para los enlaces de navegación dentro del navbar */
 .navbar .navbar-nav .nav-link {
-    color: #333; /* Color de los enlaces (gris oscuro) */
+    color: #3E3028; /* Color de los enlaces (gris oscuro) */
     font-weight: bold; /* Pone los enlaces en negrita */
     text-transform: uppercase; /* Transforma el texto a mayúsculas */
     font-size: 1.1rem; /* Tamaño de la fuente (ligeramente más grande que el tamaño normal) */
@@ -41,7 +41,7 @@
 
 /* Estilo para los iconos dentro de los enlaces del navbar */
 .navbar .d-flex .nav-link i {
-    color: #333; /* Color del icono (gris oscuro) */
+    color: #3E3028; /* Color del icono (gris oscuro) */
 }
 
 /* Efecto hover sobre los iconos dentro de los enlaces */
@@ -65,4 +65,66 @@
     display: flex; /* Usa flexbox para centrar el número */
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
+}
+
+/* ----------- RESPONSIVE ----------- */
+
+/* Ajustes para tablets y pantallas medias (menor a 992px) */
+@media (max-width: 991.98px) {
+    .navbar .nav-item {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .navbar .navbar-nav .nav-link {
+        font-size: 1.05rem;
+        padding: 0.5rem 0.7rem;
+    }
+    .navbar .navbar-brand img {
+        width: 45px;
+    }
+}
+
+/* Ajustes para móviles pequeños (menor a 576px) */
+@media (max-width: 575.98px) {
+    .navbar-collapse {
+        text-align: center;
+    }
+    .navbar-nav {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .navbar .nav-item {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0.7rem;
+    }
+    .navbar .navbar-nav .nav-link {
+        font-size: 1rem;  /* Tamaño legible */
+        padding: 0.6rem 0;
+    }
+    .navbar .navbar-brand img {
+        width: 40px; /* Logo más grande que en otros ajustes */
+    }
+    #cart-icon {
+        position: relative;
+        margin-left: 0.7rem;
+    }
+}
+
+/* Ajustes para el offcanvas del carrito */
+.offcanvas {
+    width: 320px; /* Ancho estándar */
+}
+
+@media (max-width: 575.98px) {
+    .offcanvas {
+        width: 100%; /* Para móviles, ocupa todo el ancho */
+    }
+    .cart-footer {
+        padding: 1rem;
+    }
+    #checkout-btn {
+        font-size: 1.15rem;
+        padding: 0.8rem 0;
+    }
 }

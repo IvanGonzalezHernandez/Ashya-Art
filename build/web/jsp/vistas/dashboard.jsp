@@ -10,7 +10,9 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
         <title>Dashboard</title>
         <link rel="stylesheet" href="../../resources/css/admin.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,13 +34,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-        
-        
-        
+
+
+
         <script>
             var contextPath = '<%= request.getContextPath()%>';
         </script>
-        
+
 
 
         <script src="../../resources/js/datatables.js"></script>
@@ -66,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="productos-tab" data-bs-toggle="pill" href="#productos">
+                    <a class="nav-link disabled" id="productos-tab" data-bs-toggle="pill" href="#productos" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-bag"></i> Productos
                     </a>
                 </li>
@@ -105,18 +107,24 @@
             <% String error = request.getParameter("error"); %>
 
             <% if (mensaje != null) {%>
-            <div class="alert alert-success"><%= mensaje%></div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= mensaje%>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <% } %>
 
             <% if (error != null) {%>
-            <div class="alert alert-danger"><%= error%></div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= error%>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <% }%>
 
             <!-- INICIO -->
             <div class="tab-pane fade show active" id="inicio">
                 <h2>Inicio</h2>
                 <canvas id="reservasPorMesChart" width="400" height="200"></canvas>
-                
+
             </div>
 
             <!-- CURSOS -->
@@ -527,6 +535,4 @@
     </div>
 
 </html>
-
-
 

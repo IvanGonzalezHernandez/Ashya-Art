@@ -1,28 +1,36 @@
 let images = {}; // Objeto donde se almacenarán los cursos agrupados por fecha
 
+// Determinar la URL base según el entorno
+const host = window.location.hostname;
+const API_BASE_URL = host === "localhost"
+        ? "http://localhost:8080/Ashya-Art"
+        : "http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art";
+
 // Función para obtener los cursos del servidor
 function fetchCourses() {
-    fetch("http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art/CoursesServlet")   //"http://localhost:8080/Ashya-Art/CoursesServlet"
-        .then(response => {
-            if (!response.ok) throw new Error("Error en la respuesta del servidor");
-            return response.json();
-        })
-        .then(data => {
-            const grouped = {}; // Objeto para agrupar los cursos por fecha
-            Object.keys(data).forEach(key => {
-                const dateKey = key.split(" ")[0]; // Extraemos solo la fecha (sin la hora)
-                const courseData = data[key];
-                courseData.date = dateKey; // Añadimos la fecha a los datos del curso
+    fetch(`${API_BASE_URL}/CoursesServlet`)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("Error en la respuesta del servidor");
+                return response.json();
+            })
+            .then(data => {
+                const grouped = {}; // Objeto para agrupar los cursos por fecha
+                Object.keys(data).forEach(key => {
+                    const dateKey = key.split(" ")[0]; // Extraemos solo la fecha (sin la hora)
+                    const courseData = data[key];
+                    courseData.date = dateKey; // Añadimos la fecha a los datos del curso
 
-                if (!grouped[dateKey]) grouped[dateKey] = []; // Si no existe la fecha, inicializamos el array
-                grouped[dateKey].push(courseData); // Añadimos el curso a la fecha correspondiente
+                    if (!grouped[dateKey])
+                        grouped[dateKey] = []; // Si no existe la fecha, inicializamos el array
+                    grouped[dateKey].push(courseData); // Añadimos el curso a la fecha correspondiente
+                });
+                images = grouped; // Guardamos los cursos agrupados en el objeto 'images'
+                renderCalendar(); // Renderizamos el calendario
+            })
+            .catch(error => {
+                console.error("Error al obtener cursos:", error); // Manejamos errores al obtener los cursos
             });
-            images = grouped; // Guardamos los cursos agrupados en el objeto 'images'
-            renderCalendar(); // Renderizamos el calendario
-        })
-        .catch(error => {
-            console.error("Error al obtener cursos:", error); // Manejamos errores al obtener los cursos
-        });
 }
 
 // Cuando el contenido de la página se haya cargado, obtenemos los cursos
@@ -93,8 +101,8 @@ function openModal(courseList) {
 
     const select = document.getElementById("courseSelect");
     select.innerHTML = ""; // Limpiamos las opciones previas del selector
-    
-    
+
+
     // Añadimos los cursos al select del modal
     courseList.forEach((curso, index) => {
         const option = document.createElement("option");
@@ -119,9 +127,16 @@ function openModal(courseList) {
 function updateCourseDetails() {
     const select = document.getElementById("courseSelect");
     const selectedOption = select.options[select.selectedIndex]; // Obtenemos la opción seleccionada
+    const imgUrl = selectedOption.getAttribute("data-img");
+
+    if (imgUrl && imgUrl !== "null") {
+        document.getElementById("eventImage").src = imgUrl;
+    } else {
+        // Si no hay imagen, puedes poner una imagen genérica o dejarla vacía
+        document.getElementById("eventImage").src = "/Ashya-Art/resources/imagenes/workshops-services/courses/generica.jpeg";
+    }
 
     // Actualizamos la información en el modal con los atributos del curso
-    //document.getElementById("eventImage").src = selectedOption.getAttribute("data-img"); //Este en principio Sobra
     document.getElementById("courseTitle").textContent = selectedOption.textContent;
     document.getElementById("courseDate").textContent = selectedOption.getAttribute("data-date");
     document.getElementById("courseTime").textContent = selectedOption.getAttribute("data-time");
@@ -145,16 +160,6 @@ function changeMonth(step) {
 
     renderCalendar(); // Renderizamos el calendario actualizado
 }
-
-//ESTO EN PRINCIPIO SOBRA
-// Función para manejar el envío del formulario de reserva
-//document.getElementById("reservationForm").addEventListener("submit", function (event) {
-//    event.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
-//    alert("Reserva realizada con éxito."); // Mostramos un mensaje de éxito
-//    document.getElementById("reservationForm").reset(); // Reseteamos el formulario
-//    new bootstrap.Modal(document.getElementById("eventModal")).hide(); // Cerramos el modal
-//});
-
 // Actualizamos los detalles del curso al cargar la página
 document.addEventListener("DOMContentLoaded", function () {
     updateCourseDetails();

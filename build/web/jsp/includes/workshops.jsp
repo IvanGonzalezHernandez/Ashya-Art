@@ -1,36 +1,28 @@
 <%@page import="com.ashyaart.ecommerce.modelo.Cursos"%>
-<%@ page import="java.util.List" %>  <!-- Importar la clase List para manejar listas -->
+<%@ page import="java.util.List" %>
 
-<div class="container my-5">  <!-- Contenedor principal con margen superior e inferior -->
-    <div class="row row-cols-1 row-cols-md-2 g-4">  <!-- Fila con 1 columna en pantallas pequeñas y 2 columnas en pantallas medianas o más grandes -->
+<div class="container my-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
         <%
-            // Obtener la lista de cursos desde el contexto de la aplicación
             List<Cursos> cursos = (List<Cursos>) application.getAttribute("listaCursos");
-            
-            // Verificar que la lista de cursos no sea nula ni vacía
             if (cursos != null && !cursos.isEmpty()) {
-                // Iterar sobre cada curso en la lista
+                double delay = 0.0; // delay en segundos, con decimales
                 for (Cursos curso : cursos) {
         %>
-        <!-- Crear una columna para cada curso -->
-        <div class="col"> 
-            <div class="card h-100">  <!-- Crear una tarjeta con altura flexible para el curso -->
-                <!-- Enlace al detalle del curso, pasando el nombre del curso como parámetro en la URL -->
+        <div class="col">
+            <div class="card h-100 animate__animated animate__fadeInUp" style="animation-delay: <%= delay %>s;">
                 <a href="jsp/vistas/workshops-details.jsp?curso=<%= curso.getNombre().replace(" ", "%20") %>">
-                    <!-- Imagen del curso con el atributo alt para accesibilidad -->
                     <img src="<%= curso.getImg() %>" class="card-img-top" alt="<%= curso.getNombre() %>">
                 </a>
-                <div class="card-body d-flex flex-column">  <!-- Cuerpo de la tarjeta con disposición flexible -->
-                    <!-- Nombre del curso -->
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title"><%= curso.getNombre() %></h5>
-                    <!-- Subtítulo del curso -->
                     <p class="card-text"><%= curso.getSubtitulo() %></p>
-                    <!-- Precio del curso con formato adecuado -->
                     <p class="course-price fw-bold fs-5"><%= curso.getPrecio() %>&euro;/Person</p>
                 </div>
             </div>
         </div>
         <%
+                    delay += 0.2; // suma 0.2s para la siguiente tarjeta
                 }
             }
         %>

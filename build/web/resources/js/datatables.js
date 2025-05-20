@@ -202,30 +202,12 @@ function generarBotones(tabla) {
             className: 'btn btn-success'
         },
         {
-            extend: 'pdfHtml5',
-            text: '<i class="bi bi-file-earmark-pdf"></i> PDF',
-            titleAttr: 'Exportar a PDF',
-            orientation: 'landscape',
-            pageSize: 'A4',
-            className: 'btn btn-danger'
-        },
-        {
             extend: 'print',
             text: '<i class="bi bi-printer"></i> Imprimir',
             titleAttr: 'Imprimir tabla',
             className: 'btn btn-info'
         }
     ];
-    // Personalización específica para cursos y reservas
-    if (tabla === 'cursos') {
-        botones[2].customize = function (doc) {
-            doc.content[1].table.widths = ['10%', '20%', '20%', '20%', '10%', '10%', '10%', '10%'];
-        };
-    } else if (tabla === 'reservas') {
-        botones[2].customize = function (doc) {
-            doc.content[1].table.widths = ['20%', '20%', '20%', '15%', '15%'];
-        };
-    }
 
     return botones;
 }

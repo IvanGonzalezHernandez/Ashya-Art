@@ -29,6 +29,16 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
+        String baseUrl;
+        if (request.getServerName().contains("localhost")) {
+            baseUrl = "http://localhost:8080/Ashya-Art";
+        } else {
+            baseUrl = "http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art";
+        }
+
+        String successUrl = baseUrl + "/SuccessServlet?session_id={CHECKOUT_SESSION_ID}";
+        String cancelUrl = baseUrl + "/CancelServlet?session_id={CHECKOUT_SESSION_ID}";
+
         // Clave secreta de Stripe
         Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
 
@@ -102,8 +112,8 @@ public class CheckoutServlet extends HttpServlet {
                     .putMetadata("email", email)
                     .putMetadata("productos", gson.toJson(carrito))
                     .setCustomerEmail(email)
-                    .setSuccessUrl("http://localhost:8080/Ashya-Art/SuccessServlet?session_id={CHECKOUT_SESSION_ID}")
-                    .setCancelUrl("http://localhost:8080/Ashya-Art/CancelServlet?session_id={CHECKOUT_SESSION_ID}")
+                    .setSuccessUrl(successUrl)
+                    .setCancelUrl(cancelUrl)
                     .build();
 
             Session session = Session.create(params);
