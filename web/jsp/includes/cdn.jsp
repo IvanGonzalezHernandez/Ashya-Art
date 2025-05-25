@@ -1,7 +1,9 @@
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/imagenes/logo/logo.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/general.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css">
 <script src="${pageContext.request.contextPath}/resources/js/cart.js" defer></script>
+<script src="${pageContext.request.contextPath}/resources/js/validations.js"></script>
 <!-- Tipografía Quicksand GoogleFonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,5 +19,3 @@
         crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/valorations.css"/>
-
-

@@ -315,4 +315,31 @@ public class CursosDAO {
         return resultados;
     }
 
+    public int obtenerPlazasDisponibles(Connection conexion, int idCurso, String fecha, String hora) {
+        int plazas = 0;
+        String sql = "SELECT plazas_disponibles FROM curso_fecha WHERE id_curso = ? AND fecha = ? AND hora = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, idCurso);
+            stmt.setString(2, fecha);
+            stmt.setString(3, hora);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                plazas = rs.getInt("plazas_disponibles");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return plazas;
+    }
+
+    public void restarPlazasDisponibles(Connection conexion, String fecha, String hora, int plazasARestar) throws SQLException {
+        String sql = "UPDATE curso_fecha SET plazas_disponibles = plazas_disponibles - ? WHERE fecha = ? AND hora = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, plazasARestar);
+            stmt.setString(2, fecha);
+            stmt.setString(3, hora);
+            stmt.executeUpdate();
+        }
+    }
+
 }

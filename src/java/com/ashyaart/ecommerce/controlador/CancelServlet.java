@@ -1,8 +1,6 @@
 package com.ashyaart.ecommerce.controlador;
 
-import com.ashyaart.ecommerce.dao.ClienteDAO;
-import com.ashyaart.ecommerce.modelo.Cliente;
-import com.ashyaart.ecommerce.util.ConectorBD;
+
 import com.ashyaart.ecommerce.util.PaymentLog;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
+
 
 public class CancelServlet extends HttpServlet {
 
@@ -21,7 +19,7 @@ public class CancelServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Establecer clave secreta de Stripe
-        Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
+        Stripe.apiKey = System.getenv("STRIPE_TEST_KEY");
 
         // Obtener el ID de sesión desde la URL
         String sessionId = request.getParameter("session_id");

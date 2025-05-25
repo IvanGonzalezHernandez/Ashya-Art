@@ -1,31 +1,21 @@
 <%@page import="com.ashyaart.ecommerce.modelo.Cursos"%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>  <!-- Definir el tipo de contenido y codificación de caracteres para la página -->
-<%@ page import="java.util.List" %>  <!-- Importar la clase List para manejar listas de cursos -->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
 
 <%
-    // Obtener el parámetro 'curso' de la solicitud, proviene de  curso=....... en el include de workshops que pasa el paramentro por URL
     String nombreCurso = request.getParameter("curso");
-
-    // Inicializar la variable que almacenará el curso seleccionado
     Cursos cursoSeleccionado = null;
-
-    // Obtener la lista de cursos almacenada en el contexto de la aplicación
     List<Cursos> cursos = (List<Cursos>) application.getAttribute("listaCursos");
 
-    // Si la lista de cursos no es nula y el nombre del curso es válido
     if (cursos != null && nombreCurso != null) {
-        // Iterar sobre los cursos para encontrar el que coincide con el nombre proporcionado
         for (Cursos curso : cursos) {
-            // Comparar el nombre del curso ignorando mayúsculas/minúsculas
             if (curso.getNombre().equalsIgnoreCase(nombreCurso)) {
-                // Si se encuentra el curso, asignarlo a la variable cursoSeleccionado
                 cursoSeleccionado = curso;
                 break;
             }
         }
     }
 
-    // Establecer el título de la página con el nombre del curso o un mensaje de error si no se encuentra
     request.setAttribute("titulo", cursoSeleccionado != null ? cursoSeleccionado.getNombre() : "Curso no encontrado");
 %>
 
@@ -34,60 +24,69 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <title><%= request.getAttribute("titulo")%></title>  <!-- Título de la página que se establece en el bloque anterior -->
+        <title><%= request.getAttribute("titulo")%></title>
 
-        <!-- Enlace a una hoja de estilos CSS personalizada -->
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+        <!-- CSS personalizados -->
         <link rel="stylesheet" href="../../resources/css/workshops-details.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/calendar.css"/>
+
+        <!-- JS -->
         <script src="${pageContext.request.contextPath}/resources/js/calendar.js" defer></script>
         <script src="${pageContext.request.contextPath}/resources/js/cart.js" defer></script>
 
-        <!-- Incluir archivos comunes para el sitio -->
         <%@ include file="../includes/cdn.jsp" %>
     </head>
     <body>
-        <%@ include file="../includes/header.jsp" %>  <!-- Incluir el encabezado común del sitio -->
+        <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
 
-        <div class="container my-5">  <!-- Contenedor principal de la página -->
-            <div class="row justify-content-center">  <!-- Fila centrada para mostrar el contenido -->
+        <div class="container my-5">
+            <div class="row justify-content-center">
 
-                <% if (cursoSeleccionado != null) {%>  <!-- Si se encuentra el curso seleccionado -->
+                <% if (cursoSeleccionado != null) { %>
 
-                <!-- Mostrar la imagen del curso -->
-                <div class="col-md-6 mb-4">
+                <!-- Imagen del curso -->
+                <div class="col-md-6 mb-4 animate__animated animate__fadeInLeft">
                     <div class="img-container">
-                        <img src="<%= cursoSeleccionado.getImg()%>" class="img-fluid rounded" alt="<%= cursoSeleccionado.getNombre()%>">
+                        <img src="<%= cursoSeleccionado.getImg() %>" class="img-fluid rounded" alt="<%= cursoSeleccionado.getNombre() %>">
                     </div>
                 </div>
             </div>
 
-            <!-- Mostrar los detalles del curso -->
-            <div class="row mt-4">
+            <!-- Detalles del curso -->
+            <div class="row mt-4 animate__animated animate__fadeInRight">
                 <div class="col-12">
-                    <!-- Título del curso -->
-                    <h4 class="text-center"><%= cursoSeleccionado.getNombre()%></h4>
-                    <!-- Descripción del curso -->
-                    <p class="text-center"><%= cursoSeleccionado.getDescripcion()%></p>
+                    <h4 class="text-center"><%= cursoSeleccionado.getNombre() %></h4>
+                    <p class="text-center"><%= cursoSeleccionado.getDescripcion() %></p>
 
-                    <!-- Resumen con detalles del curso -->
                     <h5 class="text-center my-4">Summary:</h5>
                     <ul class="list-unstyled text-center">
-                        <!-- Detalles del curso -->
-                        <li><strong>Level:</strong> <%= cursoSeleccionado.getNivel()%></li>
-                        <li><strong>Language:</strong> <%= cursoSeleccionado.getIdioma()%></li>
-                        <li><strong>Price:</strong> <%= cursoSeleccionado.getPrecio()%>€/Person</li>
+                        <li><strong>Level:</strong> <%= cursoSeleccionado.getNivel() %></li>
+                        <li><strong>Language:</strong> <%= cursoSeleccionado.getIdioma() %></li>
+                        <li><strong>Price:</strong> <%= cursoSeleccionado.getPrecio() %>€/Person</li>
                     </ul>
                 </div>
             </div>
 
-            <% } else { %>  <!-- Si no se encuentra el curso, mostrar mensaje de error -->
-            <h3 class="text-center text-danger">Curso no encontrado</h3>
-            <% }%>
+                <% } else { %>
+
+                <div class="row">
+                    <div class="col-12 animate__animated animate__fadeIn">
+                        <h3 class="text-center text-danger">Curso no encontrado</h3>
+                    </div>
+                </div>
+
+                <% } %>
         </div>
 
-        <%@ include file="../includes/calendar.jsp" %>
+        <!-- Calendario con animación -->
+        <div class="animate__animated animate__fadeInUp">
+            <%@ include file="../includes/calendar.jsp" %>
+        </div>
 
-        <%@ include file="../includes/footer.jsp" %>  <!-- Incluir el pie de página común del sitio -->
+        <%@ include file="../includes/footer.jsp" %>
     </body>
 </html>

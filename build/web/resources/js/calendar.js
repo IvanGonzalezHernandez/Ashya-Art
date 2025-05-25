@@ -6,7 +6,6 @@ const API_BASE_URL = host === "localhost"
         ? "http://localhost:8080/Ashya-Art"
         : "http://ashyaart.germanywestcentral.cloudapp.azure.com:8080/Ashya-Art";
 
-// Función para obtener los cursos del servidor
 function fetchCourses() {
     fetch(`${API_BASE_URL}/CoursesServlet`)
             .then(response => {
@@ -15,23 +14,33 @@ function fetchCourses() {
                 return response.json();
             })
             .then(data => {
-                const grouped = {}; // Objeto para agrupar los cursos por fecha
-                Object.keys(data).forEach(key => {
-                    const dateKey = key.split(" ")[0]; // Extraemos solo la fecha (sin la hora)
-                    const courseData = data[key];
-                    courseData.date = dateKey; // Añadimos la fecha a los datos del curso
+                const grouped = {};
+                const today = new Date().setHours(0, 0, 0, 0);
 
-                    if (!grouped[dateKey])
-                        grouped[dateKey] = []; // Si no existe la fecha, inicializamos el array
-                    grouped[dateKey].push(courseData); // Añadimos el curso a la fecha correspondiente
+                Object.keys(data).forEach(key => {
+                    const dateKey = key.split(" ")[0]; // YYYY-MM-DD
+                    const courseData = data[key];
+                    courseData.date = dateKey;
+
+                    const courseDate = new Date(dateKey).setHours(0, 0, 0, 0);
+                    const spots = parseInt(courseData.spots, 10);
+
+                    if (spots > 0 && courseDate >= today) {
+                        if (!grouped[dateKey])
+                            grouped[dateKey] = [];
+                        grouped[dateKey].push(courseData);
+                    }
                 });
-                images = grouped; // Guardamos los cursos agrupados en el objeto 'images'
-                renderCalendar(); // Renderizamos el calendario
+
+                images = grouped;
+                renderCalendar();
             })
             .catch(error => {
-                console.error("Error al obtener cursos:", error); // Manejamos errores al obtener los cursos
+                console.error("Error al obtener cursos:", error);
             });
 }
+
+
 
 // Cuando el contenido de la página se haya cargado, obtenemos los cursos
 document.addEventListener("DOMContentLoaded", function () {

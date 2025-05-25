@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ashyaart.ecommerce.util;
 
 /**
@@ -18,6 +14,29 @@ public class Validations {
             return false;
         }
         if (mensaje == null || mensaje.trim().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean esFormularioCheckoutValido(String nombre, String apellido, String correo, String telefono, String direccion, boolean politicaAceptada) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return false;
+        }
+        if (apellido == null || apellido.trim().isEmpty()) {
+            return false;
+        }
+        if (correo == null || correo.trim().isEmpty() || !esEmailValido(correo)) {
+            return false;
+        }
+        if (telefono == null || telefono.trim().isEmpty()) {
+            return false;
+        }
+        if (direccion == null || direccion.trim().isEmpty()) {
+            return false;
+        }
+        if (!politicaAceptada) {
             return false;
         }
 

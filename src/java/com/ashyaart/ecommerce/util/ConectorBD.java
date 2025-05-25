@@ -16,10 +16,10 @@ public class ConectorBD {
         try {
             if (entorno.equalsIgnoreCase("azure")) {
                 // Configuración para Azure SQL
-                String servidor = "ashyaart.database.windows.net";
-                String database = "ashya-art";
-                String usuario = "ivanAdmin@ashyaart";
-                String password = "FDWJ3@Zp@xF7QRp";
+                String servidor = System.getenv("DB_HOST_SERVER");
+                String database = System.getenv("DB_NAME_SERVER");
+                String usuario = System.getenv("DB_USER_SERVER");
+                String password = System.getenv("DB_PASS_SERVER");
 
                 url = "jdbc:sqlserver://" + servidor + ":1433;"
                         + "database=" + database + ";"
@@ -34,10 +34,10 @@ public class ConectorBD {
                 conexion = DriverManager.getConnection(url);
 
             } else {
-                // Configuración para MySQL local con driver 5
-                String servidor = "localhost";
-                String database = "ashya_art";
-                String usuario = "root";
+                // Obtener valores desde variables de entorno
+                String servidor = System.getenv("DB_HOST");
+                String database = System.getenv("DB_NAME");
+                String usuario = System.getenv("DB_USER");
                 String password = "";
 
                 url = "jdbc:mysql://" + servidor + ":3306/" + database + "?useSSL=false";
@@ -46,7 +46,7 @@ public class ConectorBD {
                 conexion = DriverManager.getConnection(url, usuario, password);
             }
 
-            System.out.println("Conexión establecida con éxito a: " + entorno);
+            System.out.println("Conexion establecida con exito a: " + entorno);
 
         } catch (SQLException ex) {
             System.out.println("Error SQL: " + ex.getMessage());
@@ -63,10 +63,10 @@ public class ConectorBD {
         try {
             if (conexion != null && !conexion.isClosed()) {
                 conexion.close();
-                System.out.println("Conexión cerrada correctamente.");
+                System.out.println("Conexion cerrada correctamente.");
             }
         } catch (SQLException ex) {
-            System.out.println("Error al cerrar la conexión: " + ex.getMessage());
+            System.out.println("Error al cerrar la conexion: " + ex.getMessage());
         }
     }
 }

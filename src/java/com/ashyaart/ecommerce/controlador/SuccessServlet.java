@@ -36,7 +36,7 @@ public class SuccessServlet extends HttpServlet {
         ConectorBD conector = new ConectorBD();
         Connection conexion = conector.getConexion();
 
-        Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
+        Stripe.apiKey = System.getenv("STRIPE_TEST_KEY");
 
         String sessionId = request.getParameter("session_id");
 
@@ -87,6 +87,7 @@ public class SuccessServlet extends HttpServlet {
                     String hora = producto.getHora();
                     int plazasReservadas = producto.getCantidad();
                     cursoDAO.guardarReserva(conexion, fecha, hora, nombre, email, plazasReservadas);
+                    cursoDAO.restarPlazasDisponibles(conexion, fecha, hora, plazasReservadas);
                 } else if ("tarjeta".equalsIgnoreCase(producto.getTipo())) {
                     for (int i = 0; i < producto.getCantidad(); i++) {
                         // Crear una nueva tarjeta para cada cantidad

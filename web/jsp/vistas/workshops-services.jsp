@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <title>JSP Page</title>
+        <title>Workshops & Services</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workshops-services.css"/>
         <%@ include file="../includes/cdn.jsp" %>
     </head>

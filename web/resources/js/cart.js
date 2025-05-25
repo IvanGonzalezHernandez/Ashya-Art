@@ -205,7 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 apellido: document.getElementById("apellido").value.trim(),
                 direccion: document.getElementById("direccion").value.trim(),
                 telefono: document.getElementById("telefono").value.trim(),
-                email: document.getElementById("correo").value.trim()
+                email: document.getElementById("correo").value.trim(),
+                politica: document.getElementById("politica").checked
             };
 
             const datosCheckout = {

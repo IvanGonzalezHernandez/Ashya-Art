@@ -21,7 +21,7 @@ public class GiftCardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Configurar la clave secreta de Stripe
-        Stripe.apiKey = "sk_test_51R1AfzQsK7W2R2yG8WVaLsvv1BRvqO4LKG8RAtZXhUYhgijhzjcETNftYFhFafv67fYfMTKJNkGEyMHRd2qxEajp00j2cVA5bx";
+        Stripe.apiKey = System.getenv("STRIPE_TEST_KEY");
 
         // Conexión a la base de datos
         ConectorBD conector = new ConectorBD();

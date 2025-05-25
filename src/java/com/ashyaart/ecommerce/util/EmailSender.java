@@ -61,8 +61,8 @@ public class EmailSender {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        final String usuario = "ivangonzalez.code@gmail.com";
-        final String claveApp = "mjkq chsj dgdm dqya";
+        final String usuario = System.getenv("SMTP_USER"); 
+        final String claveApp = System.getenv("SMTP_PASS");
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -126,8 +126,8 @@ public class EmailSender {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        final String usuario = "ivangonzalez.code@gmail.com";
-        final String claveApp = "mjkq chsj dgdm dqya";
+        final String usuario = System.getenv("SMTP_USER");
+        final String claveApp = System.getenv("SMTP_PASS");
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
