@@ -16,7 +16,7 @@
             <div class="container d-flex flex-column flex-md-row align-items-center">
                 <!-- Imagen izquierda -->
                 <div class="about-img animate__animated animate__fadeInLeft mb-4 mb-md-0 me-md-5">
-                    <img src="./resources/imagenes/about/aboutAshya.jpg" alt="Ashya Studio" class="img-fluid rounded shadow">
+                    <img src="${pageContext.request.contextPath}/resources/imagenes/about/aboutAshya.jpg" alt="Ashya Studio" class="img-fluid rounded shadow">
                 </div>
 
                 <!-- Texto derecha -->

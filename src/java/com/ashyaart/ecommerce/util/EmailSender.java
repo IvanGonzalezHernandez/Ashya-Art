@@ -60,7 +60,8 @@ public class EmailSender {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-
+        props.put("mail.smtp.localhost", "localhost");
+        
         final String usuario = System.getenv("SMTP_USER"); 
         final String claveApp = System.getenv("SMTP_PASS");
 
@@ -69,7 +70,10 @@ public class EmailSender {
                 return new PasswordAuthentication(usuario, claveApp);
             }
         });
-
+        
+        //ACTIVAR SI FALLA EL ENVÍO DEL CORREO PARA DEBUG
+        //session.setDebug(true);
+        
         // Crear mensaje
         Message mensaje = new MimeMessage(session);
         mensaje.setFrom(new InternetAddress(usuario, "Ashya Art"));
@@ -125,7 +129,9 @@ public class EmailSender {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.localhost", "localhost");
 
+        
         final String usuario = System.getenv("SMTP_USER");
         final String claveApp = System.getenv("SMTP_PASS");
 
@@ -134,6 +140,8 @@ public class EmailSender {
                 return new PasswordAuthentication(usuario, claveApp);
             }
         });
+        //ACTIVAR SI FALLA EL ENVÍO DEL CORREO PARA DEBUG
+        //session.setDebug(true);
 
         // Crear mensaje
         Message mensaje = new MimeMessage(session);

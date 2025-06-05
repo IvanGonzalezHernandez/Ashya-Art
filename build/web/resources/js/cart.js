@@ -128,6 +128,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+
+function agregarAlCarritoDesdeProductoCeramica() {
+    const botones = document.querySelectorAll(".btn-agregar-ceramica");
+
+    botones.forEach((boton) => {
+        boton.addEventListener("click", function () {
+            const id = boton.getAttribute("data-id");
+            const nombre = boton.getAttribute("data-nombre");
+            const precio = parseFloat(boton.getAttribute("data-precio"));
+            const imagen = boton.getAttribute("data-img");
+
+            const nuevoProducto = {
+                id: id,
+                nombre: nombre,
+                precio: precio,
+                imagen: imagen,
+                cantidad: 1,
+                tipo: "producto"
+            };
+
+            const existente = carrito.find(item => item.id === id);
+            if (existente) {
+                existente.cantidad++;
+            } else {
+                carrito.push(nuevoProducto);
+            }
+
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            cargarProductosCarrito();
+            actualizarContadorCarrito();
+        });
+    });
+}
+
+
+
     // Manejo de clics dentro del carrito (sumar/restar/eliminar)
     contenedorCarrito.addEventListener("click", (event) => {
         const button = event.target.closest("button.btn-eliminar");
@@ -180,7 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Llama la función para manejar las tarjetas de regalo
     agregarAlCarritoDesdeModalTarjeta();
-
+    
+    agregarAlCarritoDesdeProductoCeramica();
+    
     // Evento para mostrar el modal del formulario cliente al hacer checkout
     const btn = document.getElementById("checkout-btn");
     if (btn) {

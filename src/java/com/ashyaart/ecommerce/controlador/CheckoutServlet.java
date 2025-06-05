@@ -1,6 +1,7 @@
 package com.ashyaart.ecommerce.controlador;
 
 import com.ashyaart.ecommerce.dao.CursosDAO;
+import com.ashyaart.ecommerce.dao.ProductosDAO;
 import com.ashyaart.ecommerce.modelo.ProductoCarrito;
 import com.ashyaart.ecommerce.util.ConectorBD;
 import com.ashyaart.ecommerce.util.Validations;
@@ -15,9 +16,12 @@ import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CheckoutServlet extends HttpServlet {
 
@@ -30,6 +34,9 @@ public class CheckoutServlet extends HttpServlet {
 
         //CursosDAO
         CursosDAO cursosDAO = new CursosDAO();
+        
+        //ProductosDAO
+        ProductosDAO productosDAO = new ProductosDAO();
 
         String baseUrl;
         if (request.getServerName().contains("localhost")) {
@@ -71,7 +78,6 @@ public class CheckoutServlet extends HttpServlet {
         String direccion = (String) cliente.get("direccion");
         String telefono = (String) cliente.get("telefono");
         String email = (String) cliente.get("email");
-
         boolean politicaAceptada = (boolean) cliente.get("politica");
 
         if (!Validations.esFormularioCheckoutValido(nombre, apellido, email, telefono, direccion, politicaAceptada)) {
@@ -85,29 +91,55 @@ public class CheckoutServlet extends HttpServlet {
             List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 
             for (ProductoCarrito producto : carrito) {
-                // Validar disponibilidad de plazas si no es una tarjeta regalo
-                if (!producto.getNombre().contains("Tarjeta Regalo")) {
-                    int plazasDisponibles = cursosDAO.obtenerPlazasDisponibles(conexion, producto.getId(), producto.getFecha(), producto.getHora());
-                    System.out.println(plazasDisponibles);
-                    if (producto.getCantidad() > plazasDisponibles) {
-                        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                        response.setContentType("application/json");
-                        response.getWriter().write("{\"error\": \"No hay suficientes plazas disponibles para el curso '" + producto.getNombre() + "' el día " + producto.getFecha() + " a las " + producto.getHora() + ". Plazas disponibles: " + plazasDisponibles + "\"}");
-                        return;
-                    }
+                String descripcion;
+
+                switch (producto.getTipo()) {
+                    case "curso":
+                        // Validar plazas disponibles
+                        int plazasDisponibles = cursosDAO.obtenerPlazasDisponibles(
+                                conexion, producto.getId(), producto.getFecha(), producto.getHora()
+                        );
+
+                        if (producto.getCantidad() > plazasDisponibles) {
+                            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"No hay suficientes plazas disponibles para el curso '" + producto.getNombre() + "' el día " + producto.getFecha() + " a las " + producto.getHora() + ". Plazas disponibles: " + plazasDisponibles + "\"}");
+                            return;
+                        }
+
+                        descripcion = "Reserva para el día " + producto.getFecha() + " a las " + producto.getHora();
+                        break;
+
+                    case "producto":
+                        // Validar stock de producto físico
+                        int stockDisponible = productosDAO.obtenerStockDisponible(conexion, producto.getId());
+
+                        if (producto.getCantidad() > stockDisponible) {
+                            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"No hay suficiente stock para el producto '" + producto.getNombre() + "'. Stock disponible: " + stockDisponible + "\"}");
+                            return;
+                        }
+
+                        descripcion = "Producto de cerámica artesanal";
+                        break;
+
+                    case "tarjeta":
+                        // No validar plazas ni stock
+                        descripcion = "Tarjeta regalo de valor EUR " + producto.getPrecio() + " para usar en productos o cursos.";
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Tipo de producto no reconocido: " + producto.getTipo());
                 }
 
-                String descripcion = "Reserva para el día " + producto.getFecha() + " a las " + producto.getHora();
-                if (producto.getNombre().contains("Tarjeta Regalo")) {
-                    descripcion = "Tarjeta regalo de valor EUR " + producto.getPrecio() + " para usar en productos o cursos.";
-                }
-
+                // Crear línea para Stripe
                 lineItems.add(
                         SessionCreateParams.LineItem.builder()
                                 .setPriceData(
                                         SessionCreateParams.LineItem.PriceData.builder()
                                                 .setCurrency("eur")
-                                                .setUnitAmount((long) producto.getPrecio() * 100)
+                                                .setUnitAmount((long) (producto.getPrecio() * 100))
                                                 .setProductData(
                                                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                 .setName(producto.getNombre())
@@ -121,6 +153,7 @@ public class CheckoutServlet extends HttpServlet {
                 );
             }
 
+            // Crear sesión Stripe
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
                     .setAllowPromotionCodes(true)
@@ -145,6 +178,8 @@ public class CheckoutServlet extends HttpServlet {
 
         } catch (StripeException e) {
             throw new ServletException("Error creando sesión de Stripe", e);
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

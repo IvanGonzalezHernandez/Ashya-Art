@@ -1,8 +1,10 @@
 package com.ashyaart.ecommerce.controlador;
 
 import com.ashyaart.ecommerce.dao.CursosDAO;
+import com.ashyaart.ecommerce.dao.ProductosDAO;
 import com.ashyaart.ecommerce.dao.TarjetaRegaloDAO;
 import com.ashyaart.ecommerce.modelo.Cursos;
+import com.ashyaart.ecommerce.modelo.Productos;
 import com.ashyaart.ecommerce.modelo.TarjetaRegalo;
 import com.ashyaart.ecommerce.util.ConectorBD;
 import java.io.IOException;
@@ -40,6 +42,11 @@ public class ResetCursosServlet extends HttpServlet {
                 TarjetaRegaloDAO tarjetaRegaloDAO = new TarjetaRegaloDAO();
                 List<TarjetaRegalo> tarjetasRegalo = tarjetaRegaloDAO.obtenerTodasLasTarjetasRegalo(conexion);
                 getServletContext().setAttribute("listaTarjetasRegalo", tarjetasRegalo);
+                
+                // Obtener todos los productos de cerámica
+                ProductosDAO productosDAO = new ProductosDAO();
+                List<Productos> productos = productosDAO.obtenerTodosProductos(conexion);
+                getServletContext().setAttribute("listaProductos", productos);
 
                 actualizado = true;
                 conexion.close();

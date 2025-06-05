@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css">
 <script src="${pageContext.request.contextPath}/resources/js/cart.js" defer></script>
-<script src="${pageContext.request.contextPath}/resources/js/validations.js"></script>
 <!-- Tipografía Quicksand GoogleFonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

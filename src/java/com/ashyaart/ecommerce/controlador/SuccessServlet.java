@@ -99,8 +99,8 @@ public class SuccessServlet extends HttpServlet {
 
                         try {
                             // Generar PDF de la tarjeta regalo
-                            String rutaImagen = getServletContext().getRealPath("/resources/imagenes/workshops-services/cards/50_giftCard.png");
-                            byte[] pdfTarjeta = PdfGenerator.generarTarjetaRegaloPdfEnMemoria(rutaImagen, promoCode.getCode(), producto.getNombre(), email);
+                            String rutaImagen = getServletContext().getRealPath("/resources/imagenes/workshops-services/cards/plantillaTarjetaRegalo.png");
+                            byte[] pdfTarjeta = PdfGenerator.generarTarjetaRegaloPdfEnMemoria(rutaImagen, promoCode.getCode(), producto.getNombre(), email, producto.getPrecio());
                             if (pdfTarjeta != null) {
                                 pdfsTarjetas.add(pdfTarjeta); // Añadir el PDF a la lista
                             }

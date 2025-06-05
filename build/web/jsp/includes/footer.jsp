@@ -12,8 +12,8 @@
             <!-- Información de Ashya -->
             <div class="col-md-3 mb-4 mb-md-0">
                 <h6 class="fw-bold text-uppercase">Ashya</h6>
-                <p class="mb-1"><a href="#" class="text-dark text-decoration-none">About Ashya</a></p>
-                <p><a href="#" class="text-dark text-decoration-none">The studio</a></p>
+                <p class="mb-1"><a href="${pageContext.request.contextPath}/jsp/vistas/about-ashya.jsp" class="text-dark text-decoration-none">About Ashya</a></p>
+                <p><a href="${pageContext.request.contextPath}/jsp/vistas/studio-membership.jsp" class="text-dark text-decoration-none">The studio</a></p>
 
                 <div class="d-flex justify-content-center justify-content-md-start gap-3">
                     <a class="text-dark" href="https://www.instagram.com/ashya_art" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
