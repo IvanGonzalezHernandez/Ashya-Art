@@ -38,8 +38,10 @@
         <%@ include file="../includes/galery.jsp" %>
         
         <%@ include file="../includes/formContact.jsp" %>
+        
 
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
         <%@ include file="../includes/footer.jsp" %>
     </body>
 </html>

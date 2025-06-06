@@ -17,6 +17,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
         <div class="container-fluid mt-4">
 
             <!-- Barra de navegación con pestañas -->

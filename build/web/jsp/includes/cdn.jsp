@@ -18,3 +18,4 @@
         crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/valorations.css"/>
+<script src="${pageContext.request.contextPath}/resources/js/modalAddToCart.js" defer></script>

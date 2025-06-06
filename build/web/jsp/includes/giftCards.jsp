@@ -13,25 +13,28 @@
                 for (TarjetaRegalo tarjeta : tarjetasRegalo) {
         %>
         <div class="col">
-            <div class="card h-100 animate__animated animate__fadeInUp" style="animation-delay: <%= delay %>s;">
-                <a href="#" class="agregar-tarjeta"
-                   data-id="<%= tarjeta.getPrecio() %>"
+            <div class="card h-100 animate__animated animate__fadeInUp" style="animation-delay: <%= delay%>s;">
+                <a href="#" 
+                   onclick="añadirAlCarrito(this)" 
+                   class="agregar-tarjeta"
+                   data-id="<%= tarjeta.getPrecio()%>"
                    data-nombre="Tarjeta Regalo"
-                   data-precio="<%= tarjeta.getPrecio() %>"
-                   data-img="<%= tarjeta.getImagen() %>">
-                    <img src="<%= tarjeta.getImagen() %>" class="card-img-top" alt="Tarjeta Regalo">
+                   data-precio="<%= tarjeta.getPrecio()%>"
+                   data-img="<%= tarjeta.getImagen()%>">
+                    <img src="<%= tarjeta.getImagen()%>" class="card-img-top" alt="Tarjeta Regalo">
                 </a>
 
+
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title"><%= tarjeta.getIdCuponStripe() %></h5>
-                    <p class="card-text fw-bold fs-5">Precio: <%= tarjeta.getPrecio() %>&euro;</p>
+                    <h5 class="card-title"><%= tarjeta.getIdCuponStripe()%></h5>
+                    <p class="card-text fw-bold fs-5">Precio: <%= tarjeta.getPrecio()%>&euro;</p>
                 </div>
             </div>
         </div>
         <%
-                    delay += 0.2; // incrementamos delay para la siguiente tarjeta
-                }
-            } else {
+                delay += 0.2; // incrementamos delay para la siguiente tarjeta
+            }
+        } else {
         %>
         <div class="col-12">
             <div class="alert alert-warning" role="alert">

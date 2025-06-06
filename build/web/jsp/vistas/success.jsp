@@ -34,6 +34,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
 
         <div class="success-container d-flex flex-column justify-content-center align-items-center text-center w-100">
             <h1 class="text-custom fw-bold">Thank you for your purchase!</h1>

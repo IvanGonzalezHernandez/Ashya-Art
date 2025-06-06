@@ -34,13 +34,13 @@
 
         <!-- JS -->
         <script src="${pageContext.request.contextPath}/resources/js/cart.js" defer></script>
-        <script src="${pageContext.request.contextPath}/resources/js/modalAddToCart.js" defer></script>
 
         <%@ include file="../includes/cdn.jsp" %>
     </head>
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
 
         <main class="container my-5">
             <div class="container my-5">
@@ -96,12 +96,7 @@
 
         <%@ include file="../includes/footer.jsp" %>
 
-        <%@ include file="../includes/modalAddToCart.jsp" %>
-
-        <script>
-
-        </script>
-
+     
     </body>
 </html>
 

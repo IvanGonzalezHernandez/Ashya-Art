@@ -64,6 +64,12 @@ public class LoginServlet extends HttpServlet {
                 }
                 response.sendRedirect("jsp/vistas/login.jsp");
                 break;
+            case "web":
+                if (session != null) {
+                    session.invalidate();
+                }
+                response.sendRedirect("jsp/vistas/home.jsp");
+                break;
         }
     }
 }

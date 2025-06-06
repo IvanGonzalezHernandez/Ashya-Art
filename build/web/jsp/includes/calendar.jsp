@@ -52,7 +52,7 @@
 
 
                 <!-- Botón para agregar al carrito -->
-                <button type="button" id="addToCartButton" class="btn btn-custom w-100">Add to the cart</button>
+                <button onclick="añadirAlCarrito(this)" type="button" id="addToCartButton" class="btn btn-custom w-100">Add to the cart</button>
 
             </div>
         </div>

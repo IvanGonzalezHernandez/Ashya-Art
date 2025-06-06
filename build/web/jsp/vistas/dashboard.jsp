@@ -92,6 +92,9 @@
 
         <!-- Botón de logout abajo -->
         <form action="../../LoginServlet" method="post" class="mt-3">
+            <button id="buttonWeb" name="button" value="web" class="btn btn-secondary mb-2 w-100">
+                Ir a la Web
+            </button>
             <button id="button" name="button" value="logout" class="btn btn-dark w-100">
                 Cerrar Sesión
             </button>

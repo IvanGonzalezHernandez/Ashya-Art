@@ -16,6 +16,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
 
         
         <%@ include file="../includes/products.jsp" %>

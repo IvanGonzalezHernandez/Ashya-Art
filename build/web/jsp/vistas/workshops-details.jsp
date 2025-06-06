@@ -42,6 +42,7 @@
     <body>
         <%@ include file="../includes/header.jsp" %>
         <%@ include file="../includes/formClient.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
 
         <div class="container my-5">
             <div class="row justify-content-center">
