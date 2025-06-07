@@ -40,7 +40,7 @@
 /* Imágenes de fondo */
 .hero-section .bg-image-1 {
     background: url('../../resources/imagenes/studio/Atelier_1.jpg') center center/cover no-repeat;
-    min-height: 300px; /* Altura mínima para que no se achiquen demasiado */
+    min-height: 600px; /* Altura mínima para que no se achiquen demasiado */
     width: 100%;
     border-radius: 10px;
 }

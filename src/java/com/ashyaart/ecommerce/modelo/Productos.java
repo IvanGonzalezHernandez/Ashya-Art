@@ -3,6 +3,7 @@ package com.ashyaart.ecommerce.modelo;
 import java.math.BigDecimal;
 
 public class Productos {
+
     private int id;
     private String nombre;
     private String descripcion;
@@ -11,7 +12,8 @@ public class Productos {
     private String imagen;
     private String categoria;
 
-    public Productos() {}
+    public Productos() {
+    }
 
     public Productos(int id, String nombre, String descripcion, BigDecimal precio, int stock, String imagen, String categoria) {
         this.id = id;
@@ -23,8 +25,16 @@ public class Productos {
         this.categoria = categoria;
     }
 
-    // Getters y Setters
+    public Productos(String nombre, String descripcion, BigDecimal precio, int stock, String imagen, String categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+        this.imagen = imagen;
+        this.categoria = categoria;
+    }
 
+    // Getters y Setters
     public int getId() {
         return id;
     }

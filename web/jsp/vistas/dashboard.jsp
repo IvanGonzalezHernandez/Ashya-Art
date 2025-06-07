@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" id="productos-tab" data-bs-toggle="pill" href="#productos" tabindex="-1" aria-disabled="true">
+                    <a class="nav-link" id="productos-tab" data-bs-toggle="pill" href="#productos" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-bag"></i> Productos
                     </a>
                 </li>
@@ -80,6 +80,11 @@
                 <li class="nav-item">
                     <a class="nav-link" id="clientes-tab" data-bs-toggle="pill" href="#clientes">
                         <i class="bi bi-people"></i> Clientes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" id="configuracion-tab" data-bs-toggle="pill" href="#newsletter">
+                        <i class="bi bi-envelope"></i> Newsletter
                     </a>
                 </li>
                 <li class="nav-item">
@@ -354,19 +359,152 @@
             <div class="tab-pane fade" id="productos">
                 <h2>Gestión de Productos</h2>
 
+                <!-- Tabla de Productos -->
                 <table id="tablaProductos" class="display" style="width:100%">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nombre</th>
+                            <th>Descripción</th>
                             <th>Precio</th>
                             <th>Stock</th>
                             <th>Categoría</th>
+                            <th>Imagen</th>
+                            <th>Borrar</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Se llenará dinámicamente -->
+                        <!-- Aquí se llenarán dinámicamente -->
                     </tbody>
                 </table>
+
+                <div class="accordion" id="accordionProductos">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#formProducto">✏️ Añadir Producto</button>
+                        </h2>
+                        <div id="formProducto" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+
+                                <form action="<%= request.getContextPath()%>/AdminServlet" method="post" class="mb-5">
+                                    <input type="hidden" name="action" value="insertarProducto">
+
+                                    <div class="mb-3">
+                                        <label for="nombreProducto" class="form-label">Nombre del producto</label>
+                                        <input type="text" class="form-control" id="nombreProducto" name="nombre" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcionProducto" class="form-label">Descripción</label>
+                                        <textarea class="form-control" id="descripcionProducto" name="descripcion" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="precioProducto" class="form-label">Precio (€)</label>
+                                        <input type="number" step="0.01" class="form-control" id="precioProducto" name="precio" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="stockProducto" class="form-label">Stock</label>
+                                        <input type="number" class="form-control" id="stockProducto" name="stock" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="categoriaProducto" class="form-label">Categoría</label>
+                                        <select class="form-select" id="categoriaProducto" name="categoria" required>
+                                            <option value="" disabled selected>Selecciona una categoría</option>
+                                            <option value="Tazas">Tazas</option>
+                                            <option value="Platos">Platos</option>
+                                            <option value="Cuencos">Cuencos</option>
+                                            <option value="Jarrones">Jarrones</option>
+                                            <option value="Macetas">Macetas</option>
+                                            <option value="Fuentes">Fuentes</option>
+                                            <option value="Decoración">Decoración</option>
+                                            <option value="Candelabros">Candelabros</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <label for="imagenProducto" class="form-label">Imagen del producto (URL)</label>
+                                        <input type="text" class="form-control" id="imagenProducto" name="imagen">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-custom">Guardar Producto</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal Editar Producto -->
+                <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="formEditarProducto" action="${pageContext.request.contextPath}/AdminServlet" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" name="action" value="editarProducto">
+                                    <input type="hidden" id="editarIdProducto" name="id">
+
+                                    <div class="mb-3">
+                                        <label for="editarNombreProducto" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="editarNombreProducto" name="nombre" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarDescripcionProducto" class="form-label">Descripción</label>
+                                        <textarea class="form-control" id="editarDescripcionProducto" name="descripcion" rows="3" required></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarPrecioProducto" class="form-label">Precio (€)</label>
+                                        <input type="number" step="0.01" class="form-control" id="editarPrecioProducto" name="precio" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarStockProducto" class="form-label">Stock</label>
+                                        <input type="number" class="form-control" id="editarStockProducto" name="stock" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarCategoriaProducto" class="form-label">Categoría</label>
+                                        <select class="form-select" id="editarCategoriaProducto" name="categoria" required>
+                                            <option value="" disabled>Selecciona una categoría</option>
+                                            <option value="Tazas">Tazas</option>
+                                            <option value="Platos">Platos</option>
+                                            <option value="Cuencos">Cuencos</option>
+                                            <option value="Jarrones">Jarrones</option>
+                                            <option value="Macetas">Macetas</option>
+                                            <option value="Fuentes">Fuentes</option>
+                                            <option value="Decoración">Decoración</option>
+                                            <option value="Candelabros">Candelabros</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarImagenProducto" class="form-label">URL Imagen</label>
+                                        <input type="text" class="form-control" id="editarImagenProducto" name="imagen">
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-custom">Guardar cambios</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
 
             <!-- TARJETAS REGALO -->
@@ -479,6 +617,10 @@
                 </div>
 
 
+            </div>
+
+            <!-- NEWSLETTER -->
+            <div class="tab-pane fade" id="newsletter">
             </div>
 
 

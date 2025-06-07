@@ -3,9 +3,11 @@ package com.ashyaart.ecommerce.controlador;
 import com.ashyaart.ecommerce.dao.AdminDAO;
 import com.ashyaart.ecommerce.dao.ClienteDAO;
 import com.ashyaart.ecommerce.dao.CursosDAO;
+import com.ashyaart.ecommerce.dao.ProductosDAO;
 import com.ashyaart.ecommerce.dao.TarjetaRegaloDAO;
 import com.ashyaart.ecommerce.modelo.Cliente;
 import com.ashyaart.ecommerce.modelo.Cursos;
+import com.ashyaart.ecommerce.modelo.Productos;
 import com.ashyaart.ecommerce.modelo.Reserva;
 import com.ashyaart.ecommerce.modelo.TarjetaRegalo;
 import com.ashyaart.ecommerce.util.ConectorBD;
@@ -14,6 +16,7 @@ import com.google.gson.Gson;
 
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -60,6 +63,21 @@ public class AdminServlet extends HttpServlet {
             // Enviar la respuesta con los datos de cursos en formato JSON
             response.getWriter().write(json);
 
+        } else if ("productos".equals(tipo)) {
+            try {
+                // Obtener la lista de productos
+                ProductosDAO productoDAO = new ProductosDAO();
+                List<Productos> listaProductos = productoDAO.obtenerTodosProductos(conexion);
+
+                // Convertir la lista de productos a JSON
+                Gson gson = new Gson();
+                String json = gson.toJson(listaProductos);
+
+                // Enviar la respuesta con los datos de productos en formato JSON
+                response.getWriter().write(json);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if ("cursosCliente".equals(tipo)) {
             String email = request.getParameter("email");
 
@@ -156,7 +174,27 @@ public class AdminServlet extends HttpServlet {
             } else {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+crear+el+curso");
             }
+        } else if ("insertarProducto".equals(action)) {
+            // Recoger parámetros del formulario
+            String nombre = request.getParameter("nombre");
+            String descripcion = request.getParameter("descripcion");
+            String precioStr = request.getParameter("precio");
+            BigDecimal precio = new BigDecimal(precioStr);
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            String categoria = request.getParameter("categoria");
+            String imagen = request.getParameter("imagen");
 
+            // Crear el objeto Producto (ajusta el constructor si es necesario)
+            Productos producto = new Productos(nombre, descripcion, precio, stock, imagen, categoria);
+            ProductosDAO productoDAO = new ProductosDAO();
+            boolean insertado = productoDAO.insertarProducto(conexion, producto);
+
+            // Redirigir según el resultado
+            if (insertado) {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Producto+creado+correctamente");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+crear+el+producto");
+            }
         } else if ("insertarFechaCurso".equals(action)) {
             // Recoger parámetros para asignar fecha
             int idCurso = Integer.parseInt(request.getParameter("id_curso"));
@@ -188,6 +226,17 @@ public class AdminServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+eliminar+el+curso");
             }
 
+        } else if ("eliminarProducto".equals(action)) {
+            int idProducto = Integer.parseInt(request.getParameter("id"));
+
+            ProductosDAO productosDAO = new ProductosDAO();
+            boolean eliminado = productosDAO.eliminarProductoLogicamente(conexion, idProducto);
+
+            if (eliminado) {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Producto+eliminado+correctamente");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+eliminar+el+producto");
+            }
         } else if ("cambiarContrasena".equals(action)) {
 
             String email = request.getParameter("email");
@@ -234,6 +283,28 @@ public class AdminServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Curso+actualizado+correctamente");
             } else {
                 response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+actualizar+el+curso");
+            }
+
+        } else if ("editarProducto".equals(action)) {
+            // Recoger parámetros del formulario para editar producto
+            int idProducto = Integer.parseInt(request.getParameter("id"));
+            String nombre = request.getParameter("nombre");
+            String descripcion = request.getParameter("descripcion");
+            BigDecimal precio = new BigDecimal(request.getParameter("precio"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            String categoria = request.getParameter("categoria");
+            String imagen = request.getParameter("imagen");
+
+            // Crear objeto Productos con datos del formulario
+            Productos producto = new Productos(idProducto, nombre, descripcion, precio, stock, imagen, categoria);
+            ProductosDAO productoDAO = new ProductosDAO();
+            boolean actualizado = productoDAO.actualizarProducto(conexion, producto);
+
+            // Redirigir según resultado
+            if (actualizado) {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?mensaje=Producto+actualizado+correctamente");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/jsp/vistas/dashboard.jsp?error=No+se+pudo+actualizar+el+producto");
             }
         } else {
             // Acción no válida

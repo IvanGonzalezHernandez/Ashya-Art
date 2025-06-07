@@ -7,7 +7,7 @@ import com.ashyaart.ecommerce.modelo.Productos;
 
 public class ProductosDAO {
 
-    public void agregarProducto(Connection conexion, Productos producto) throws SQLException {
+    public boolean insertarProducto(Connection conexion, Productos producto) {
         String sql = "INSERT INTO productos (nombre, descripcion, precio, stock, imagen, categoria) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, producto.getNombre());
@@ -16,19 +16,23 @@ public class ProductosDAO {
             stmt.setInt(4, producto.getStock());
             stmt.setString(5, producto.getImagen());
             stmt.setString(6, producto.getCategoria());
-            stmt.executeUpdate();
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public void eliminarProductoLogicamente(Connection conexion, int idProducto) throws SQLException {
-        // Primero consultamos el producto actual
+    public boolean eliminarProductoLogicamente(Connection conexion, int idProducto) {
         String select = "SELECT nombre, descripcion, precio, stock, categoria FROM productos WHERE id_producto = ?";
+        String insert = "INSERT INTO productos_eliminados (nombre, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)";
+        String delete = "DELETE FROM productos WHERE id_producto = ?";
+
         try (PreparedStatement stmt = conexion.prepareStatement(select)) {
             stmt.setInt(1, idProducto);
             ResultSet rs = stmt.executeQuery();
+
             if (rs.next()) {
-                // Insertamos en productos_eliminados antes de eliminar
-                String insert = "INSERT INTO productos_eliminados (nombre, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)";
                 try (PreparedStatement insertStmt = conexion.prepareStatement(insert)) {
                     insertStmt.setString(1, rs.getString("nombre"));
                     insertStmt.setString(2, rs.getString("descripcion"));
@@ -38,14 +42,18 @@ public class ProductosDAO {
                     insertStmt.executeUpdate();
                 }
 
-                // Luego eliminamos el producto original
-                String delete = "DELETE FROM productos WHERE id_producto = ?";
                 try (PreparedStatement deleteStmt = conexion.prepareStatement(delete)) {
                     deleteStmt.setInt(1, idProducto);
                     deleteStmt.executeUpdate();
                 }
+
+                return true; // Operación exitosa
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        return false; // Algo falló
     }
 
     public List<Productos> obtenerTodosProductos(Connection conexion) throws SQLException {
@@ -65,6 +73,24 @@ public class ProductosDAO {
             }
         }
         return productos;
+    }
+
+    public boolean actualizarProducto(Connection conexion, Productos producto) {
+        String sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, imagen = ?, categoria = ? WHERE id_producto = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getDescripcion());
+            ps.setBigDecimal(3, producto.getPrecio());
+            ps.setInt(4, producto.getStock());
+            ps.setString(5, producto.getImagen());
+            ps.setString(6, producto.getCategoria());
+            ps.setInt(7, producto.getId()); // Asegúrate que getId() da el valor de id_producto
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public int obtenerStockDisponible(Connection conexion, int idProducto) throws SQLException {

@@ -67,6 +67,67 @@ $(document).ready(function () {
         });
     }
 
+    if ($('#tablaProductos').length) {
+        $('#tablaProductos').DataTable({
+            ajax: {
+                url: contextPath + '/AdminServlet?tipo=productos',
+                dataSrc: '',
+                error: function (xhr, status, error) {
+                    console.error("Error al cargar datos de productos:", xhr.responseText);
+                }
+            },
+            columns: [
+                {data: 'id'},
+                {data: 'nombre'},
+                {
+                    data: 'descripcion',
+                    render: function (data) {
+                        return data.length > 50 ? data.substring(0, 50) + '...' : data;
+                    }
+                },
+                {data: 'precio'},
+                {data: 'stock'},
+                {data: 'categoria'},
+                {
+                    data: 'imagen',
+                    render: function (data) {
+                        return `<img src="${data}" alt="Imagen producto" style="max-height: 60px;">`;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return `
+                        <button class="btn btn-danger btn-sm eliminar-producto" data-id="${row.id}">
+                            Borrar
+                        </button>
+                    `;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return `
+                        <button class="btn btn-warning btn-sm editar-producto" data-id="${row.id}">
+                            Editar
+                        </button>
+                    `;
+                    }
+                }
+            ],
+            pageLength: 5,
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: generarBotones('productos'),
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            }
+        });
+    }
+
+
     if ($('#tablaClientes').length) {
         $('#tablaClientes').DataTable({
             ajax: {
@@ -235,6 +296,31 @@ $(document).on('click', '.eliminar-curso', function () {
         });
     }
 });
+
+// Evento para eliminar un producto lógicamente
+$(document).on('click', '.eliminar-producto', function () {
+    const idProducto = $(this).data('id'); // Obtener el ID del producto
+    console.log(idProducto);
+    if (confirm('¿Seguro que quieres eliminar este producto?')) {
+        $.ajax({
+            url: contextPath + '/AdminServlet', // Ruta del Servlet
+            method: 'POST',
+            data: {
+                action: 'eliminarProducto', // Acción para eliminar producto
+                id: idProducto               // ID del producto a eliminar
+            },
+            success: function (response) {
+                alert('Producto eliminado correctamente');
+                $('#tablaProductos').DataTable().ajax.reload(); // Recargar tabla productos
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al eliminar el producto:', xhr.responseText);
+                alert('Error al eliminar el producto. Intenta nuevamente.');
+            }
+        });
+    }
+});
+
 // Evento para abrir el modal con datos del curso
 $(document).on('click', '.editar-curso', function () {
     const idCurso = $(this).data('id');
@@ -255,11 +341,25 @@ $(document).on('click', '.editar-curso', function () {
     modal.show();
 });
 
+// Evento para abrir el modal con datos del producto
+$(document).on('click', '.editar-producto', function () {
+    // Obtener la fila correspondiente y sus datos
+    const table = $('#tablaProductos').DataTable();
+    const rowData = table.row($(this).parents('tr')).data();
 
+    // Rellenar el formulario del modal con los datos del producto
+    $('#editarIdProducto').val(rowData.id);
+    $('#editarNombreProducto').val(rowData.nombre);
+    $('#editarDescripcionProducto').val(rowData.descripcion);
+    $('#editarPrecioProducto').val(rowData.precio);
+    $('#editarStockProducto').val(rowData.stock);
+    $('#editarCategoriaProducto').val(rowData.categoria);
+    $('#editarImagenProducto').val(rowData.imagen);
 
-
-
-
+    // Mostrar el modal
+    const modal = new bootstrap.Modal(document.getElementById('modalEditarProducto'));
+    modal.show();
+});
 
 
 
