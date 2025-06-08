@@ -343,6 +343,7 @@ $(document).on('click', '.editar-curso', function () {
 
 // Evento para abrir el modal con datos del producto
 $(document).on('click', '.editar-producto', function () {
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/shop', 'editarImagenProducto'); //La llamo para evitar el bugeo del select en editar producto
     // Obtener la fila correspondiente y sus datos
     const table = $('#tablaProductos').DataTable();
     const rowData = table.row($(this).parents('tr')).data();
@@ -406,6 +407,107 @@ $(document).on('click', '.ver-cursos', function () {
         }
     });
 });
+
+function cargarImagenesEnSelect(rutaServlet, carpeta, idSelect) {
+    $.ajax({
+        url: rutaServlet,
+        method: 'GET',
+        data: { carpeta: carpeta },
+        dataType: 'json',
+        success: function (imagenes) {
+            var $select = $('#' + idSelect);
+            $select.empty();
+            $select.append('<option value="">Selecciona una imagen</option>');
+
+            if (imagenes.length === 0) {
+                $select.append('<option value="">No hay imágenes disponibles</option>');
+                return;
+            }
+
+            $.each(imagenes, function (index, imgUrl) {
+                var nombreArchivo = imgUrl.split('/').pop();
+                $select.append('<option value="' + imgUrl + '">' + nombreArchivo + '</option>');
+            });
+        },
+        error: function () {
+            alert('Error al cargar las imágenes.');
+        }
+    });
+}
+
+$(document).ready(function () {
+    // Cursos
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/workshops-services/courses', 'img');
+    $('#img').on('change', function () {
+        var url = $(this).val();
+        if (url) {
+            $('#img-preview').attr('src', url);
+            $('#preview-container').show();
+        } else {
+            $('#img-preview').attr('src', '');
+            $('#preview-container').hide();
+        }
+    });
+
+    // Productos shop
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/shop', 'imagenProducto');
+    $('#imagenProducto').on('change', function () {
+        var url = $(this).val();
+        if (url) {
+            $('#img-preview-imagenProducto').attr('src', url);
+            $('#preview-container-imagenProducto').show();
+        } else {
+            $('#img-preview-imagenProducto').attr('src', '');
+            $('#preview-container-imagenProducto').hide();
+        }
+    });
+
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/shop', 'editarImagenProducto');
+    $('#editarImagenProducto').on('change', function () {
+        var url = $(this).val();
+        if (url) {
+            $('#img-preview-editarImagenProducto').attr('src', url);
+            $('#preview-container-editarImagenProducto').show();
+        } else {
+            $('#img-preview-editarImagenProducto').attr('src', '');
+            $('#preview-container-editarImagenProducto').hide();
+        }
+    });
+
+    // Tarjetas regalo
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/workshops-services/cards', 'imagen-tarjeta');
+    $('#imagen-tarjeta').on('change', function () {
+        var url = $(this).val();
+        if (url) {
+            $('#img-preview-tarjeta').attr('src', url);
+            $('#preview-container-tarjeta').show();
+        } else {
+            $('#img-preview-tarjeta').attr('src', '');
+            $('#preview-container-tarjeta').hide();
+        }
+    });
+
+    // Cargar imágenes para editar curso
+    cargarImagenesEnSelect('/Ashya-Art/ImagesServlet', '/resources/imagenes/workshops-services/courses', 'editarImgSelect');
+    $('#editarImgSelect').on('change', function () {
+        var url = $(this).val();
+
+        // Actualizamos la preview
+        if (url) {
+            $('#img-preview-editarImgSelect').attr('src', url);
+            $('#preview-container-editarImgSelect').show();
+        } else {
+            $('#img-preview-editarImgSelect').attr('src', '');
+            $('#preview-container-editarImgSelect').hide();
+        }
+
+        // Además actualizamos el input hidden para que se envíe la imagen elegida en el formulario
+        $('#editarImg').val(url);
+    });
+});
+
+
+
 
 
 

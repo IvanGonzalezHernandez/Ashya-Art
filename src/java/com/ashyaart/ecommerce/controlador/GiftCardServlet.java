@@ -30,7 +30,7 @@ public class GiftCardServlet extends HttpServlet {
         // Obtener parámetros del formulario
         String precio = request.getParameter("precioTarjeta"); // El precio que el admin asigna a la tarjeta
         String idCupon = request.getParameter("idCupon"); // El id del cupón de Stripe
-        String imagen = request.getParameter("imagen"); // La ruta de la imagen proporcionada por el admin
+        String imagen = request.getParameter("imagen-tarjeta"); // La ruta de la imagen proporcionada por el admin
 
         double precioDouble = Double.parseDouble(precio); // si viene como String
         long precioCentimos = Math.round(precioDouble * 100);

@@ -49,6 +49,7 @@
         <!--Para evitar el error de uncaught reference del carrito-->
         <div style="display: none">
             <%@ include file="../includes/header.jsp" %>
+            <%@ include file="../includes/modalAddToCart.jsp" %>
         </div>
 
     </body>

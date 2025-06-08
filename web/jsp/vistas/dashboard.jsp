@@ -206,6 +206,20 @@
                                         <label for="editarIdioma" class="form-label">Idioma</label>
                                         <input type="text" class="form-control" id="editarIdioma" name="idioma" required>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label for="editarImgSelect" class="form-label">Imagen del curso</label>
+                                        <select id="editarImgSelect" class="form-select">
+                                            <option value="">Selecciona una imagen</option>
+                                            <!-- Las opciones se cargarán dinámicamente -->
+                                        </select>
+                                    </div>
+
+                                    <!-- Contenedor para preview -->
+                                    <div id="preview-container-editarImgSelect"  style="margin-top:10px; display:none;">
+                                        <img id="img-preview-editarImgSelect" src="" alt="Vista previa imagen" style="max-width: 200px; max-height: 150px; border: 1px solid #ccc; padding: 4px;">
+                                    </div>
+
                                 </div>
 
                                 <div class="modal-footer">
@@ -265,8 +279,15 @@
 
                                     <div class="mb-3">
                                         <label for="img" class="form-label">Imagen del curso (URL)</label>
-                                        <input type="text" class="form-control" id="img" name="img">
+                                        <select class="form-select" id="img" name="img" required>
+                                            <!-- Opciones dinámicas aquí -->
+                                        </select>
+                                        <div id="preview-container" style="margin-top:10px; display:none;">
+                                            <img id="img-preview" src="" alt="Preview imagen seleccionada" style="max-width: 200px; max-height: 150px; border: 1px solid #ccc; padding: 4px;" />
+                                        </div>
                                     </div>
+
+
 
                                     <button type="submit" class="btn btn-custom">Guardar Curso</button>
                                 </form>
@@ -428,8 +449,15 @@
 
                                     <div class="mb-3">
                                         <label for="imagenProducto" class="form-label">Imagen del producto (URL)</label>
-                                        <input type="text" class="form-control" id="imagenProducto" name="imagen">
+                                        <select class="form-select" id="imagenProducto" name="imagen" required>
+                                            <option value="">Selecciona una imagen</option>
+                                            <!-- Opciones dinámicas aquí -->
+                                        </select>
+                                        <div id="preview-container-imagenProducto" style="margin-top:10px; display:none;">
+                                            <img id="img-preview-imagenProducto" src="" alt="Preview imagen seleccionada" style="max-width: 200px; max-height: 150px; border: 1px solid #ccc; padding: 4px;" />
+                                        </div>
                                     </div>
+
 
                                     <button type="submit" class="btn btn-custom">Guardar Producto</button>
                                 </form>
@@ -491,8 +519,14 @@
 
                                     <div class="mb-3">
                                         <label for="editarImagenProducto" class="form-label">URL Imagen</label>
-                                        <input type="text" class="form-control" id="editarImagenProducto" name="imagen">
+                                        <select class="form-select" id="editarImagenProducto" name="imagen" required>
+                                            <!-- Opciones dinámicas aquí -->
+                                        </select>
+                                        <div id="preview-container-editarImagenProducto" style="margin-top:10px; display:none;">
+                                            <img id="img-preview-editarImagenProducto" src="" alt="Preview imagen" style="max-width: 200px; max-height: 150px; border: 1px solid #ccc; padding: 4px;" />
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <div class="modal-footer">
@@ -550,10 +584,18 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="imagen" class="form-label">Ruta de la Imagen</label>
-                                        <input type="text" id="imagen" name="imagen" class="form-control" required>
+                                        <label for="imagen-tarjeta" class="form-label">Ruta de la Imagen</label>
+                                        <select class="form-select" id="imagen-tarjeta" name="imagen-tarjeta" required>
+                                        </select>
                                         <small class="form-text text-muted">Ruta de la imagen que se asociará con la tarjeta regalo.</small>
+
+                                        <div id="preview-container-tarjeta" style="margin-top:10px; display:none;">
+                                            <img id="img-preview-tarjeta" src="" alt="Preview imagen" style="max-width: 200px; max-height: 150px; border: 1px solid #ccc; padding: 4px;" />
+                                        </div>
                                     </div>
+
+
+
 
                                     <button type="submit" class="btn btn-custom">Crear Plantilla</button>
                                 </form>
@@ -630,16 +672,17 @@
                 <h2>Configuración</h2>
                 <p>Ajustes generales de la tienda.</p>
 
-                <form action="${pageContext.request.contextPath}/ResetCursosServlet" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-warning" value="resetPassword">
-                        Resetear Listas de Cursos
-                    </button>
-                </form>
+                <div class="d-flex flex-column gap-3" style="max-width: 250px;">
+                    <form action="${pageContext.request.contextPath}/ResetCursosServlet" method="post" class="mb-0">
+                        <button type="submit" class="btn btn-custom w-100" value="resetPassword">
+                            Reset Data
+                        </button>
+                    </form>
 
-                <!-- Botón que abre el modal -->
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cambiarContraseñaModal">
-                    Cambiar contraseña
-                </button>
+                    <button type="button" class="btn btn-custom w-100" data-bs-toggle="modal" data-bs-target="#cambiarContraseñaModal">
+                        Change Password
+                    </button>
+                </div>
 
                 <!-- Modal para cambiar la contraseña -->
                 <div class="modal fade" id="cambiarContraseñaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -655,11 +698,12 @@
                             <div class="modal-body">
                                 <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
                                 <input type="password" name="nuevaPassword" class="form-control mb-2" placeholder="Nueva contraseña" required>
-                                <input type="password" name="confirmarPassword" class="form-control" placeholder="Confirmar contraseña" required>
+                                <input type="password" name="confirmarPassword" class="form-control" placeholder="Confirmar nueva contraseña" required>
+
+
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-custom">Actualizar contraseña</button>
                             </div>
                         </form>
                     </div>
@@ -677,6 +721,7 @@
     <!--Para evitar el error de uncaught reference del carrito-->
     <div style="display: none">
         <%@ include file="../includes/header.jsp" %>
+        <%@ include file="../includes/modalAddToCart.jsp" %>
     </div>
 
 </html>
