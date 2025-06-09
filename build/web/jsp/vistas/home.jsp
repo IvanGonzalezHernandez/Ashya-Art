@@ -13,6 +13,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
         <title>Home</title>
+        <!-- for SEO -->
+        <meta name="keywords" content="ceramic art in Hamburg, ceramics workshops, Ashya Art, handcrafted pottery, pottery classes, ceramic studio Hamburg">
+        <meta name="description" content="Ashya Art offers unique ceramic workshops in Hamburg and handcrafted pottery made with care. Book your spot online.">
+        
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css">
         <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
         <!-- Swiper CSS -->

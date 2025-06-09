@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>About Ashya</title>
+        <meta name="keywords" content="Ashya Art, ceramic studio Hamburg, handcrafted pottery, ceramic artists, about Ashya Art">
+        <meta name="description" content="Discover the story behind Ashya Art, a ceramic studio in Hamburg dedicated to handcrafted pottery and creative workshops.">
         <link rel="stylesheet" href="./resources/css/about.css">
         <%@ include file="../includes/cdn.jsp" %>
     </head>
@@ -36,9 +38,9 @@
         </section>
 
         <%@ include file="../includes/galery.jsp" %>
-        
+
         <%@ include file="../includes/formContact.jsp" %>
-        
+
 
         <%@ include file="../includes/formClient.jsp" %>
         <%@ include file="../includes/modalAddToCart.jsp" %>

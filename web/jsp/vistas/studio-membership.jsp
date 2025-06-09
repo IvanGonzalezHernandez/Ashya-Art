@@ -5,6 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>Ashya's Studio</title>
+        <meta name="keywords" content="Ashya Art studio, ceramic studio Hamburg, pottery studio, ceramic gallery, Ashya Art location">
+        <meta name="description" content="Visit Ashya Art’s studio in Hamburg – a cozy space for ceramic art, workshops, gallery, and handmade pottery. Explore our creative world.">
+
         <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
         <!-- Swiper CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />

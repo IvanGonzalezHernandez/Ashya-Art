@@ -83,10 +83,7 @@
                 <% } %>
         </div>
 
-        <!-- Calendario con animación -->
-        <div class="animate__animated animate__fadeInUp">
-            <%@ include file="../includes/calendar.jsp" %>
-        </div>
+        <%@ include file="../includes/calendar.jsp" %>
 
         <%@ include file="../includes/footer.jsp" %>
     </body>

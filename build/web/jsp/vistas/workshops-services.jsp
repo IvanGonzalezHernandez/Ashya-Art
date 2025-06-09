@@ -11,6 +11,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>Workshops & Services</title>
+        <meta name="keywords" content="ceramics workshops Hamburg, pottery classes, Ashya Art workshops, learn ceramics, ceramic courses">
+        <meta name="description" content="Join Ashya Art's ceramics workshops in Hamburg to learn pottery and ceramic art. Reserve your spot in our creative studio today.">
+
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workshops-services.css"/>
         <%@ include file="../includes/cdn.jsp" %>
     </head>
